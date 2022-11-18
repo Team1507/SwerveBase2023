@@ -9,11 +9,21 @@
 #include "commands/ExampleCommand.h"
 #include "subsystems/ExampleSubsystem.h"
 
+#include <frc/XboxController.h>
 
-class RobotContainer {
+class RobotContainer
+{
  public:
   RobotContainer();
 
+  //****************Controllers*******************
+  frc::XboxController m_xbox {0};
+
+
+  //****************Subsystems*******************
+
+
+  //******************AUTO*************************
   frc2::Command* GetAutonomousCommand();
 
  private:

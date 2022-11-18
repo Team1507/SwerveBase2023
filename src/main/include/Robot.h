@@ -6,6 +6,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc2/command/Command.h>
+#include <iostream>
 
 #include "RobotContainer.h"
 
@@ -22,6 +23,8 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
   void SimulationInit() override;
   void SimulationPeriodic() override;
+
+  void WriteToSmartDashboard(void);
 
  private:
   // Have it null by default so that if testing teleop it
