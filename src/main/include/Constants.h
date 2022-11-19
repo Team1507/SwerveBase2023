@@ -5,7 +5,10 @@
 #pragma once
 
 
-
+//********** DRIVETRAIN CONSTANTS **********
+#define FRONT_RIGHT_DRIVE_CAN_ID     7
+#define FRONT_RIGHT_ANGLE_CAN_ID     8
+#define FRONT_RIGHT_ANG_ENC_CAN_ID   11
 
 
 

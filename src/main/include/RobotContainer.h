@@ -11,6 +11,10 @@
 
 #include <frc/XboxController.h>
 
+#include "subsystems/Drivetrain.h"
+
+
+
 class RobotContainer
 {
  public:
@@ -21,6 +25,8 @@ class RobotContainer
 
 
   //****************Subsystems*******************
+  Drivetrain m_drivetrain;
+
 
 
   //******************AUTO*************************

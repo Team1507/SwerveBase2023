@@ -5,12 +5,19 @@
 #include <frc2/command/CommandScheduler.h>
 #include <frc/DriverStation.h>
 
+
+#include <iostream>
+
+//THIS IS A GLOBAL VARIABLE
+RobotContainer m_container;
+
 void Robot::RobotInit() 
 {
   //*************************** INIT ******************************
   std::cout<<"RobotInit"<<std::endl;
   std::cout<<"FRC2022: SwerveDev"<<std::endl;
   std::cout<<"Version: " << __DATE__ <<"  "<<__TIME__<<std::endl<<std::endl; 
+
 
 }
 
