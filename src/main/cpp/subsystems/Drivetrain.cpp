@@ -8,15 +8,6 @@
 Drivetrain::Drivetrain()
 {
 
-    m_motor.ConfigFactoryDefault();
-
-    m_motor.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor,0,10);
-
-    m_motor.SetInverted( false );
-
-    m_motor.SetNeutralMode(NeutralMode::Brake);
-
-
 
 }
 
@@ -27,8 +18,11 @@ void Drivetrain::Periodic()
 }
 
 
-void Drivetrain::Drive( float power )
+void Drivetrain::Drive( float lx, float ly, float rx )
 {
-    m_motor.Set(ControlMode::PercentOutput, power);
+    m_frontRight.DriveMotor( ly );
+
+    m_frontRight.AngleMotor( rx );
+
 
 }

@@ -6,7 +6,8 @@
 
 #include <frc2/command/SubsystemBase.h>
 
-#include "ctre/Phoenix.h"
+#include "subsystems/SwerveModule.h"
+
 #include "Constants.h"
 
 class Drivetrain : public frc2::SubsystemBase {
@@ -16,12 +17,12 @@ class Drivetrain : public frc2::SubsystemBase {
 
   void Periodic() override;
 
-  void Drive( float power );
+  void Drive( float lx, float ly, float rx  );
 
 
  private:
 
-  WPI_TalonFX m_motor{ FRONT_RIGHT_DRIVE_CAN_ID };
+  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_CAN_ID,  FRONT_RIGHT_ANGLE_CAN_ID,  FRONT_RIGHT_ANG_ENC_CAN_ID };
 
 
 
