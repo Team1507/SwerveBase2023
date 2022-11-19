@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/CmdTestOne.h"
-#include <iostream>
+#include "Robot.h"
 
 CmdTestOne::CmdTestOne() 
 {
@@ -15,6 +15,8 @@ CmdTestOne::CmdTestOne()
 void CmdTestOne::Initialize() 
 {
   std::cout<<"CmdTestOne"<<std::endl;
+
+  m_container.m_drivetrain.m_frontRight.CalibratePivotAbsoutePositionOffset();
 
 
 }

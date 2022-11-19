@@ -24,6 +24,13 @@ class SwerveModule : public frc2::SubsystemBase {
   double GetPivotAbsoutePosition(void);
 
 
+  //Absolute Encoder calibration
+  void   CalibratePivotAbsoutePositionStart(void);
+  void   CalibratePivotAbsoutePositionOffset(void);
+ 
+ 
+ 
+ 
  private:
 
   WPI_TalonFX   m_driveMotor;
