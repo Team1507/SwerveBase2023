@@ -22,7 +22,7 @@ void Drivetrain::Drive( float lx, float ly, float rx )
 {
     m_frontRight.DriveMotor( ly );
 
-    m_frontRight.AngleMotor( rx );
+    m_frontRight.PivotMotor( rx );
 
 
 }

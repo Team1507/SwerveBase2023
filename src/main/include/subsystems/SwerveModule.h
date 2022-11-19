@@ -10,20 +10,25 @@
 
 class SwerveModule : public frc2::SubsystemBase {
  public:
-  SwerveModule(const int driveMotorCanID, const int angleMotorCanID, const int angleEncoderCanID);
+  SwerveModule(const int driveMotorCanID, const int pivotMotorCanID, const int pivotEncoderCanID);
 
   void Periodic() override;
 
 
   void DriveMotor( float power );
-  void AngleMotor( float power );
+  void PivotMotor( float power );
+
+
+  //Pivot Encoders/Direction
+  double GetPivotPosition(void);
+  double GetPivotAbsoutePosition(void);
 
 
  private:
 
   WPI_TalonFX   m_driveMotor;
-  WPI_TalonFX   m_angleMotor;
-  WPI_CANCoder  m_angleEncoder;
+  WPI_TalonFX   m_pivotMotor;
+  WPI_CANCoder  m_pivotEncoder;
 
   
 

@@ -20,9 +20,13 @@ class Drivetrain : public frc2::SubsystemBase {
   void Drive( float lx, float ly, float rx  );
 
 
+
+  //These should be private!!!!!
+  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_MOTOR_CAN_ID,  FRONT_RIGHT_PIVOT_MOTOR_CAN_ID,  FRONT_RIGHT_PIVOT_ENCODER_CAN_ID };
+
  private:
 
-  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_CAN_ID,  FRONT_RIGHT_ANGLE_CAN_ID,  FRONT_RIGHT_ANG_ENC_CAN_ID };
+
 
 
 

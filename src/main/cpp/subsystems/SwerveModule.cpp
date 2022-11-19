@@ -4,10 +4,10 @@
 
 #include "subsystems/SwerveModule.h"
 
-SwerveModule::SwerveModule(int driveMotorCanID, int angleMotorCanID, int angleEncoderCanID )
+SwerveModule::SwerveModule(int driveMotorCanID, int pivotMotorCanID, int pivotEncoderCanID )
             : m_driveMotor(driveMotorCanID),
-              m_angleMotor(angleMotorCanID),
-              m_angleEncoder(angleEncoderCanID)
+              m_pivotMotor(pivotMotorCanID),
+              m_pivotEncoder(pivotEncoderCanID)
 {
 
     //Initialize Drive Motor
@@ -16,11 +16,11 @@ SwerveModule::SwerveModule(int driveMotorCanID, int angleMotorCanID, int angleEn
     m_driveMotor.SetInverted( false );
     m_driveMotor.SetNeutralMode(NeutralMode::Brake);
 
-    //Initialize Angle Motor
-    m_angleMotor.ConfigFactoryDefault();
-    m_angleMotor.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor,0,10);
-    m_angleMotor.SetInverted( false );
-    m_angleMotor.SetNeutralMode(NeutralMode::Brake);
+    //Initialize pivot Motor
+    m_pivotMotor.ConfigFactoryDefault();
+    m_pivotMotor.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor,0,10);
+    m_pivotMotor.SetInverted( false );
+    m_pivotMotor.SetNeutralMode(NeutralMode::Brake);
 
 
 
@@ -36,10 +36,17 @@ void SwerveModule::Periodic() {}
   {
     m_driveMotor.Set(ControlMode::PercentOutput, power);
   }
-  void SwerveModule::AngleMotor( float power )
+  void SwerveModule::PivotMotor( float power )
   {
-    m_angleMotor.Set(ControlMode::PercentOutput, power);
+    m_pivotMotor.Set(ControlMode::PercentOutput, power);
   }
 
-
+  double SwerveModule::GetPivotPosition(void)
+  {
+    m_pivotEncoder.GetPosition();
+  }
+  double SwerveModule::GetPivotAbsoutePosition(void)
+  {
+    m_pivotEncoder.GetAbsolutePosition();
+  }
 
