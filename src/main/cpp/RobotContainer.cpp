@@ -14,6 +14,7 @@
 #include "commands/CmdButtonY.h"
 #include "commands/CmdTestOne.h"
 #include "commands/CmdTestTwo.h"
+#include "commands/CmdCalibrateSwerveEncoders.h"
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   // Initialize all of your commands and subsystems here
@@ -26,6 +27,9 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   //********************************Smart Dashboard Buttons**************************************
   frc::SmartDashboard::PutData( "CmdTestOne", new CmdTestOne());
   frc::SmartDashboard::PutData( "CmdTestTwo", new CmdTestTwo());
+
+  frc::SmartDashboard::PutData( "CmdCalSwerveEnc_1", new CmdCalibrateSwerveEncoders(1));
+  frc::SmartDashboard::PutData( "CmdCalSwerveEnc_2", new CmdCalibrateSwerveEncoders(2));
 
 
   // Configure the button bindings

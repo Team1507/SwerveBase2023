@@ -33,8 +33,21 @@ void SwerveModule::Periodic() {}
 
 
 
-    //Test Methods for now....
+    // Get relative encoder position since reset.  Does not wrap, keep incrementing 
+    double SwerveModule::GetPivotEncoderPosition(void)
+    {
+        return m_pivotEncoder.GetPosition();
+    }
 
+    // Get Absolute position, range [-180, 180]
+    double SwerveModule::GetPivotEncoderAbsoutePosition(void)
+    {
+        return m_pivotEncoder.GetAbsolutePosition();    
+    }
+
+    /*
+     * Testing Methods Only!
+     */
     void SwerveModule::DriveMotor( float power )
     {
         m_driveMotor.Set(ControlMode::PercentOutput, power);
@@ -43,20 +56,6 @@ void SwerveModule::Periodic() {}
     {
         m_pivotMotor.Set(ControlMode::PercentOutput, power);
     }
-
-
-    // Get relative encoder position since reset.  Does not wrap, keep incrementing 
-    double SwerveModule::GetPivotPosition(void)
-    {
-        return m_pivotEncoder.GetPosition();
-    }
-
-    // Get Absolute position, range [-180, 180]
-    double SwerveModule::GetPivotAbsoutePosition(void)
-    {
-        return m_pivotEncoder.GetAbsolutePosition();    
-    }
-
 
 
 
@@ -68,13 +67,13 @@ void SwerveModule::Periodic() {}
     //    1) Zero Magnet offet - clears out any previous calibration
     //   -delay-
     //    2) Get position error then set magnet offset to zero absolute encoder  
-    void SwerveModule::CalibratePivotAbsoutePositionStart(void)
+    void SwerveModule::CalibratePivotEncoderAbsoutePositionStart(void)
     {
         m_pivotEncoder.ConfigMagnetOffset( 0.0 );                           //Clear offset
     }
-    void SwerveModule::CalibratePivotAbsoutePositionOffset(void)
+    void SwerveModule::CalibratePivotEncoderAbsoutePositionOffset(void)
     {
-        double curr_abs_position = m_pivotEncoder.GetAbsolutePosition();    //Get Position, which is our offset error
+        double curr_abs_position = m_pivotEncoder.GetAbsolutePosition();    //Get Position, which is our new offset error
         m_pivotEncoder.ConfigMagnetOffset( -curr_abs_position, 10);         //Set Magnetic offset with offset error
     }
 

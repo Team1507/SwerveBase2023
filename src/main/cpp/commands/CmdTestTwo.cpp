@@ -15,8 +15,5 @@ CmdTestTwo::CmdTestTwo()
 
 void CmdTestTwo::Initialize() 
 {
-  std::cout<<"CmdTestTwo"<<std::endl;
-
-  m_container.m_drivetrain.m_frontRight.CalibratePivotAbsoutePositionOffset();
 
 }

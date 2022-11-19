@@ -14,9 +14,6 @@ CmdTestOne::CmdTestOne()
 
 void CmdTestOne::Initialize() 
 {
-  std::cout<<"CmdTestOne"<<std::endl;
-
-  m_container.m_drivetrain.m_frontRight.CalibratePivotAbsoutePositionOffset();
 
 
 }

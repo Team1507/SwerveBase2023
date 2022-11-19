@@ -15,18 +15,24 @@ class SwerveModule : public frc2::SubsystemBase {
   void Periodic() override;
 
 
-  void DriveMotor( float power );
-  void PivotMotor( float power );
 
 
-  //Pivot Encoders/Direction
-  double GetPivotPosition(void);
-  double GetPivotAbsoutePosition(void);
+
+  //Pivot Encoders
+  double GetPivotEncoderPosition(void);
+  double GetPivotEncoderAbsoutePosition(void);
+
+
+
+  //Testing only!
+  void   DriveMotor( float power );
+  void   PivotMotor( float power );  
+
 
 
   //Absolute Encoder calibration
-  void   CalibratePivotAbsoutePositionStart(void);
-  void   CalibratePivotAbsoutePositionOffset(void);
+  void   CalibratePivotEncoderAbsoutePositionStart(void);
+  void   CalibratePivotEncoderAbsoutePositionOffset(void);
  
  
  

@@ -70,8 +70,8 @@ void Robot::WriteToSmartDashboard(void)
   frc::SmartDashboard::PutNumber("Xbox Right-X",  (double)m_container.m_xbox.GetRightX() ); 
 
   //Swerve Drive
-  frc::SmartDashboard::PutNumber("FR-Pos",   m_container.m_drivetrain.m_frontRight.GetPivotPosition() ); 
-  frc::SmartDashboard::PutNumber("FR-ABS",   m_container.m_drivetrain.m_frontRight.GetPivotAbsoutePosition() ); 
+  frc::SmartDashboard::PutNumber("FR-Pos",   m_container.m_drivetrain.m_frontRight.GetPivotEncoderPosition() ); 
+  frc::SmartDashboard::PutNumber("FR-ABS",   m_container.m_drivetrain.m_frontRight.GetPivotEncoderAbsoutePosition() ); 
 
 
 }
