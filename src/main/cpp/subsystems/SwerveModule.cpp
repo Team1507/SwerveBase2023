@@ -43,10 +43,10 @@ void SwerveModule::Periodic() {}
 
   double SwerveModule::GetPivotPosition(void)
   {
-    m_pivotEncoder.GetPosition();
+    return m_pivotEncoder.GetPosition();
   }
   double SwerveModule::GetPivotAbsoutePosition(void)
   {
-    m_pivotEncoder.GetAbsolutePosition();
+    return m_pivotEncoder.GetAbsolutePosition();
   }
 

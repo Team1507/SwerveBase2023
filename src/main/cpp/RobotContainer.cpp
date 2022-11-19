@@ -3,16 +3,29 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "RobotContainer.h"
+#include "frc/smartdashboard/SmartDashboard.h"
+
 
 #include "commands/CmdDriveWithGamepad.h"
 
+#include "commands/CmdButtonA.h"
+#include "commands/CmdButtonB.h"
+#include "commands/CmdButtonX.h"
+#include "commands/CmdButtonY.h"
+#include "commands/CmdTestOne.h"
+#include "commands/CmdTestTwo.h"
+
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   // Initialize all of your commands and subsystems here
-  
+
 
   //**************************** Subsystem Defaults****************************************
   m_drivetrain.SetDefaultCommand( CmdDriveWithGamepad() );
 
+
+  //********************************Smart Dashboard Buttons**************************************
+  frc::SmartDashboard::PutData( "CmdTestOne", new CmdTestOne());
+  frc::SmartDashboard::PutData( "CmdTestTwo", new CmdTestTwo());
 
 
   // Configure the button bindings
@@ -20,7 +33,13 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-  // Configure your button bindings here
+
+  m_btn_xbox_A.WhenPressed(new CmdButtonA(true)).WhenReleased(new CmdButtonA(false));
+  m_btn_xbox_B.WhenPressed(new CmdButtonB(true)).WhenReleased(new CmdButtonB(false));
+  m_btn_xbox_X.WhenPressed(new CmdButtonX(true)).WhenReleased(new CmdButtonX(false));
+  m_btn_xbox_Y.WhenPressed(new CmdButtonY(true)).WhenReleased(new CmdButtonY(false));
+
+
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {

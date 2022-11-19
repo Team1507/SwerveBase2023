@@ -8,10 +8,12 @@
 
 #include "commands/ExampleCommand.h"
 #include "subsystems/ExampleSubsystem.h"
+#include <frc2/command/button/JoystickButton.h>
 
 #include <frc/XboxController.h>
 
 #include "subsystems/Drivetrain.h"
+#include "GamepadMap.h"
 
 
 
@@ -38,4 +40,10 @@ class RobotContainer
   ExampleCommand m_autonomousCommand;
 
   void ConfigureButtonBindings();
+
+  frc2::JoystickButton m_btn_xbox_A{&m_xbox, GAMEPADMAP_BUTTON_A};
+  frc2::JoystickButton m_btn_xbox_B{&m_xbox, GAMEPADMAP_BUTTON_B};
+  frc2::JoystickButton m_btn_xbox_X{&m_xbox, GAMEPADMAP_BUTTON_X};
+  frc2::JoystickButton m_btn_xbox_Y{&m_xbox, GAMEPADMAP_BUTTON_Y};
+
 };
