@@ -17,7 +17,10 @@ class Drivetrain : public frc2::SubsystemBase {
 
   void Periodic() override;
 
-  void Drive( float lx, float ly, float rx  );
+  void Drive( float lx, float ly, float rx  );  //Test
+
+  void RobotcentricDrive( float fwdrev, float rightleft, float rotate );
+  void FieldcentricDrive( float fwdrev, float rightleft, float rotate );
 
 
   //Encoders
