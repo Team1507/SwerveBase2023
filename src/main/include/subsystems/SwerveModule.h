@@ -16,17 +16,26 @@ class SwerveModule : public frc2::SubsystemBase {
 
 
 
+  //Set Modes
+  void SetPivotAngle( float angle );
 
+
+
+  
 
   //Pivot Encoders
   double GetPivotEncoderPosition(void);
   double GetPivotEncoderAbsoutePosition(void);
-
+  
+  double GetPivotMotorPosition(void);
+  void   ResetPivotEncoders(void);
 
 
   //Testing only!
-  void   DriveMotor( float power );
-  void   PivotMotor( float power );  
+  float  GetDriveMotor( void );
+  float  GetPivotMotor( void );
+  void   SetDriveMotor( float power );
+  void   SetPivotMotor( float power );  
 
 
 
@@ -43,6 +52,6 @@ class SwerveModule : public frc2::SubsystemBase {
   WPI_TalonFX   m_pivotMotor;
   WPI_CANCoder  m_pivotEncoder;
 
-  
+  float m_desired_pivot_angle;
 
 };

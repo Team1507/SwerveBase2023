@@ -17,6 +17,12 @@ void Robot::RobotInit()
   std::cout<<"Version: " << __DATE__ <<"  "<<__TIME__<<std::endl<<std::endl; 
 
 
+  //Init Subsystems
+
+  m_container.m_drivetrain.HardResetDriveEncoders();
+  //m_container.m_drivetrain.ResetDriveEncoders();
+  m_container.m_drivetrain.ResetPivotEncoders();
+
 }
 
 
@@ -71,7 +77,10 @@ void Robot::WriteToSmartDashboard(void)
 
   //Swerve Drive
   frc::SmartDashboard::PutNumber("FR-Pos",   m_container.m_drivetrain.m_frontRight.GetPivotEncoderPosition() ); 
+  frc::SmartDashboard::PutNumber("FR-MPos",  m_container.m_drivetrain.m_frontRight.GetPivotMotorPosition() ); 
   frc::SmartDashboard::PutNumber("FR-ABS",   m_container.m_drivetrain.m_frontRight.GetPivotEncoderAbsoutePosition() ); 
+
+  frc::SmartDashboard::PutNumber("FR-Pivot", m_container.m_drivetrain.m_frontRight.GetPivotMotor() ); 
 
 
 }
