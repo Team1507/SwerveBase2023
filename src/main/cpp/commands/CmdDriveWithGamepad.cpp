@@ -24,8 +24,8 @@ void CmdDriveWithGamepad::Execute()
 {
 
   //Limiters
-  const float xyScaleValue = 0.5;    //Translational scale (fwd/rev/strafe)
-  const float rScaleValue  = 0.5;    //Rotational scale
+  const float xyScaleValue = 0.25;    //Translational scale (fwd/rev/strafe)
+  const float rScaleValue  = 0.25;    //Rotational scale
   
 
   //Get Gamepad Inputs
@@ -39,9 +39,9 @@ void CmdDriveWithGamepad::Execute()
 
 
   //Scalers
-  yL *= xyScaleValue;
-  xL *= xyScaleValue;
-  xR *= rScaleValue;
+  yL *= -xyScaleValue;    //Invert Axis, make positive forward
+  xL *=  xyScaleValue;    
+  xR *= -rScaleValue;     //Invert Axis, make positive CCW
 
   //Run depending on Mode:  
 

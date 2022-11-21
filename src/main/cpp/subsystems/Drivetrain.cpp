@@ -3,9 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include <math.h>
+#include <iostream>
 
 #include "subsystems\Drivetrain.h"
 #include "frc/smartdashboard/SmartDashboard.h"
+
 
 //         ^
 //     FR  |  FR
@@ -62,16 +64,17 @@ Drivetrain::Drivetrain()
 {
 
     //Testing - Set Swerve Pivot Angle
-    frc::SmartDashboard::PutNumber("SetPivotAngle", 0.0);
+    frc::SmartDashboard::PutNumber("SetPivotAngle", 0.0);  
 
     frc::SmartDashboard::PutNumber("SetGyroAngle", 0.0);
+
 
 }
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() 
 {
-    m_frontRight.SetPivotAngle( frc::SmartDashboard::GetNumber("SetPivotAngle", 0.0) );
+    //m_frontRight.SetPivotAngle( frc::SmartDashboard::GetNumber("SetPivotAngle", 0.0) );
 }
 
 
@@ -121,8 +124,8 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
         //Pivot angle is the arcTan of the module vector
         // Tan(Theta) = y/x,   Theta = arctan(y/x)
         //We use function arctan2 to account for the discontinuity with -x values
-        //Note usage:  arctan2 (y,x) 
-        moduleAngle[i] = atan2f(moduleVectors[i].y,  moduleVectors[i].x);
+        //Note usage:  arctan2 (y,x), answer in radians
+        moduleAngle[i] = RAD2DEG(  atan2f(moduleVectors[i].y,  moduleVectors[i].x)  );
 
     }
 

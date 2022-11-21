@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SwerveModule.h"
+#include "Robot.h"
 #include <iostream>
 
 #define ENCODER_TICKS_PER_DEGREE    (44000.0/360.0)
@@ -29,12 +30,12 @@ SwerveModule::SwerveModule(int driveMotorCanID, int pivotMotorCanID, int pivotEn
 
     //Initialise Pivot Encoder
     m_pivotEncoder.ConfigAbsoluteSensorRange(AbsoluteSensorRange::Signed_PlusMinus180 );    //Sets angle range as -180 to + 180
-    m_pivotEncoder.ConfigSensorDirection(true);                                             //+angle Clockwise turn
+    m_pivotEncoder.ConfigSensorDirection(false);                                            //+angle CounterClockwise turn
 
 
 
     //Init members
-    m_desired_pivot_angle = 0.0;
+    m_desired_pivot_angle = 90.0;   //Pivot Angle of 90 = forward
 
 }
 
@@ -43,9 +44,16 @@ void SwerveModule::Periodic()
 {
 
     //Manual control of Pivot motor
-    float curr_pivot_angle = GetPivotEncoderPosition();
+    //float curr_pivot_angle = GetPivotEncoderPosition();
+    float curr_pivot_angle = GetPivotEncoderAbsoutePosition();
 
-    float angle_error = m_desired_pivot_angle - curr_pivot_angle;
+    float angle_error = curr_pivot_angle - m_desired_pivot_angle;
+
+    if( angle_error >= 180.0 )
+        angle_error -= 360.0;  //flip direction
+
+    if( angle_error <= -180.0 )
+        angle_error += 360.0;  //flip direction
 
     float power = 0.0;
 
@@ -56,10 +64,21 @@ void SwerveModule::Periodic()
     if( power >  0.2) power =  0.2;
     if( power < -0.2) power = -0.2;
 
-    SetPivotMotor( power );
+    //Stop running if Y button pressed
+    if(m_container.m_xbox.GetYButton())
+    {
+        SetPivotMotor( 0.0 );
+        power= 0.0;
+    }
+
+    else
+        SetPivotMotor( power );
 
 
-    //std::cout << "Error " << angle_error << "  Power " << power << std::endl;
+    // //std::cout << "Error " << angle_error << "  Power " << power << std::endl;
+
+    // if( power != 0.0)
+    //     std::cout << curr_pivot_angle << "    " << m_desired_pivot_angle  << "   "  << angle_error << "  Power " << power << std::endl;
 
 }
 
@@ -129,6 +148,7 @@ void SwerveModule::SetPivotMotor( float power )
 //    2) Get position error then set magnet offset to zero absolute encoder  
 void SwerveModule::CalibratePivotEncoderAbsoutePositionStart(void)
 {
+    m_pivotEncoder.ConfigFactoryDefault();
     m_pivotEncoder.ConfigMagnetOffset( 0.0 );                           //Clear offset
 }
 void SwerveModule::CalibratePivotEncoderAbsoutePositionOffset(void)
