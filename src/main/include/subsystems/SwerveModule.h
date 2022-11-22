@@ -44,7 +44,7 @@ class SwerveModule : public frc2::SubsystemBase {
   void   CalibrateSteerEncoderAbsoutePositionOffset(void);
  
  
- 
+  float m_desired_steer_angle; 
  
  private:
 
@@ -52,6 +52,6 @@ class SwerveModule : public frc2::SubsystemBase {
   WPI_TalonFX   m_steerMotor;
   WPI_CANCoder  m_steerEncoder;
 
-  float m_desired_steer_angle;
+
 
 };

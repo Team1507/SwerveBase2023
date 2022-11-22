@@ -10,7 +10,7 @@
 //Falcon steer ticks per degree
 // MK4i steer ratio 150/7:1.   Integrated encoder = 2048 ticks/rotation
 // Therefore 150/7 * 2048 =43885.7
-#define ENCODER_TICKS_PER_DEGREE    (43885.1/360.0)
+#define ENCODER_TICKS_PER_DEGREE    (43885.7/360.0)
 
 
 SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEncoderCanID )
@@ -24,15 +24,24 @@ SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEn
     m_driveMotor.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor,0,10);
     m_driveMotor.SetInverted( false );
     m_driveMotor.SetNeutralMode(NeutralMode::Brake);
+    m_steerMotor.SetSelectedSensorPosition(0.0,0,10);
 
     //Initialize steer Motor
     m_steerMotor.ConfigFactoryDefault();
     m_steerMotor.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor,0,10);
-    m_steerMotor.SetInverted( false );
+    m_steerMotor.SetInverted( true );
     m_steerMotor.SetNeutralMode(NeutralMode::Brake);
-    m_steerMotor.SetSelectedSensorPosition(0.0);
+    m_steerMotor.SetSelectedSensorPosition(0.0,0,10);
 
-    //Initialize steer 
+    //Initialize steer PID
+    m_steerMotor.Config_kF(0, 0.0, 10);
+    m_steerMotor.Config_kP(0, 0.1, 10);
+    m_steerMotor.Config_kI(0, 0.0, 10);
+    m_steerMotor.Config_kD(0, 0.0, 10);
+
+    //m_steerMotor.ConfigAllowableClosedloopError( 0, 1.0 * ENCODER_TICKS_PER_DEGREE, 10 );
+
+
 
     //Initialise Steer Encoder
     m_steerEncoder.ConfigAbsoluteSensorRange(AbsoluteSensorRange::Signed_PlusMinus180 );    //Sets angle range as -180 to + 180
@@ -91,9 +100,29 @@ void SwerveModule::Periodic()
 
 
 //Set angle of module
+//Input Range[-180 to 180]
 void SwerveModule::SetSteerAngle( float angle )
 {
     m_desired_steer_angle = angle;
+
+    //Crossover logic and PID loop
+
+    //Get current position of the drive motor
+    float curr_steer_angle    = GetSteerEncoderAbsoutePosition();               //return in degrees [-180:180]
+
+    float angle_error = m_desired_steer_angle - curr_steer_angle;               //Calculate angle delta
+
+    //if angle error is > 180, its faster to go the oppisite way
+    if( angle_error >=  180.0 )  angle_error -= 360.0;
+    if( angle_error <= -180.0 )  angle_error += 360.0;
+
+
+    float curr_steer_position = m_steerMotor.GetSelectedSensorPosition(0);      //return in encoder counts
+
+    float target_position = curr_steer_position + (angle_error* ENCODER_TICKS_PER_DEGREE);  
+
+    m_steerMotor.Set(ControlMode::Position,  target_position );
+
 }
 
 
@@ -131,7 +160,7 @@ float SwerveModule::GetDriveMotor( void )
 }
 float SwerveModule::GetSteerMotor( void )
 {
-    return m_steerMotor.Get();
+    return m_steerMotor.GetMotorOutputPercent();
 }
 void SwerveModule::SetDriveMotor( float power )
 {

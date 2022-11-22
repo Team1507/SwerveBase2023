@@ -144,6 +144,7 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
         // for(int i=0; i<NUM_MODULES; i++)
         //     //something
         m_frontRight.SetDriveMotor(0.0);
+        m_frontRight.SetSteerMotor(0.0);
         return;
     }
 
