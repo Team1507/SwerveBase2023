@@ -10,38 +10,38 @@
 
 class SwerveModule : public frc2::SubsystemBase {
  public:
-  SwerveModule(const int driveMotorCanID, const int pivotMotorCanID, const int pivotEncoderCanID);
+  SwerveModule(const int driveMotorCanID, const int steerMotorCanID, const int steerEncoderCanID);
 
   void Periodic() override;
 
 
 
   //Set Modes
-  void SetPivotAngle( float angle );
+  void SetSteerAngle( float angle );
 
 
 
   
 
-  //Pivot Encoders
-  double GetPivotEncoderPosition(void);
-  double GetPivotEncoderAbsoutePosition(void);
+  //Steer Encoders
+  double GetSteerEncoderPosition(void);
+  double GetSteerEncoderAbsoutePosition(void);
   
-  double GetPivotMotorPosition(void);
-  void   ResetPivotEncoders(void);
+  double GetSteerMotorPosition(void);
+  void   ResetSteerEncoders(void);
 
 
   //Testing only!
   float  GetDriveMotor( void );
-  float  GetPivotMotor( void );
+  float  GetSteerMotor( void );
   void   SetDriveMotor( float power );
-  void   SetPivotMotor( float power );  
+  void   SetSteerMotor( float power );  
 
 
 
   //Absolute Encoder calibration
-  void   CalibratePivotEncoderAbsoutePositionStart(void);
-  void   CalibratePivotEncoderAbsoutePositionOffset(void);
+  void   CalibrateSteerEncoderAbsoutePositionStart(void);
+  void   CalibrateSteerEncoderAbsoutePositionOffset(void);
  
  
  
@@ -49,9 +49,9 @@ class SwerveModule : public frc2::SubsystemBase {
  private:
 
   WPI_TalonFX   m_driveMotor;
-  WPI_TalonFX   m_pivotMotor;
-  WPI_CANCoder  m_pivotEncoder;
+  WPI_TalonFX   m_steerMotor;
+  WPI_CANCoder  m_steerEncoder;
 
-  float m_desired_pivot_angle;
+  float m_desired_steer_angle;
 
 };

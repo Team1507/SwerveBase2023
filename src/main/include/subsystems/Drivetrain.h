@@ -26,11 +26,11 @@ class Drivetrain : public frc2::SubsystemBase {
   //Encoders
   void HardResetDriveEncoders(void);
   void ResetDriveEncoders(void);
-  void ResetPivotEncoders(void);
+  void ResetSteerEncoders(void);
 
 
   //These should be private!!!!!
-  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_MOTOR_CAN_ID,  FRONT_RIGHT_PIVOT_MOTOR_CAN_ID,  FRONT_RIGHT_PIVOT_ENCODER_CAN_ID };
+  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_ENCODER_CAN_ID };
 
  private:
 

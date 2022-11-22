@@ -63,8 +63,8 @@ vector_t moduleRotationUnitVector[NUM_MODULES] = {
 Drivetrain::Drivetrain()
 {
 
-    //Testing - Set Swerve Pivot Angle
-    frc::SmartDashboard::PutNumber("SetPivotAngle", 0.0);  
+    //Testing - Set Swerve Steer Angle
+    frc::SmartDashboard::PutNumber("SetSteerAngle", 0.0);  
 
     frc::SmartDashboard::PutNumber("SetGyroAngle", 0.0);
 
@@ -74,7 +74,7 @@ Drivetrain::Drivetrain()
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() 
 {
-    //m_frontRight.SetPivotAngle( frc::SmartDashboard::GetNumber("SetPivotAngle", 0.0) );
+    //m_frontRight.SetSteerAngle( frc::SmartDashboard::GetNumber("SetSteerAngle", 0.0) );
 }
 
 
@@ -82,7 +82,7 @@ void Drivetrain::Drive( float lx, float ly, float rx )
 {
     //m_frontRight.SetDriveMotor( ly );
 
-    //m_frontRight.SetPivotMotor( rx * 0.15 );
+    //m_frontRight.SetSteerMotor( rx * 0.15 );
 }
 
 
@@ -121,7 +121,7 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
         if( modulePower[i] > maxPower)
             maxPower = modulePower[i];
 
-        //Pivot angle is the arcTan of the module vector
+        //Steer angle is the arcTan of the module vector
         // Tan(Theta) = y/x,   Theta = arctan(y/x)
         //We use function arctan2 to account for the discontinuity with -x values
         //Note usage:  arctan2 (y,x), answer in radians
@@ -153,7 +153,7 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
     {
         m_frontRight.SetDriveMotor( modulePower[i] );
 
-        m_frontRight.SetPivotAngle( moduleAngle[i] );
+        m_frontRight.SetSteerAngle( moduleAngle[i] );
 
     }
 
@@ -181,8 +181,8 @@ void Drivetrain::ResetDriveEncoders(void)
 {
 
 }
-void Drivetrain::ResetPivotEncoders(void)
+void Drivetrain::ResetSteerEncoders(void)
 {
-    m_frontRight.ResetPivotEncoders();
+    m_frontRight.ResetSteerEncoders();
 }
 

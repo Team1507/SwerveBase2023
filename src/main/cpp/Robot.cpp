@@ -21,7 +21,7 @@ void Robot::RobotInit()
 
   m_container.m_drivetrain.HardResetDriveEncoders();
   //m_container.m_drivetrain.ResetDriveEncoders();
-  m_container.m_drivetrain.ResetPivotEncoders();
+  m_container.m_drivetrain.ResetSteerEncoders();
 
 }
 
@@ -76,11 +76,11 @@ void Robot::WriteToSmartDashboard(void)
   frc::SmartDashboard::PutNumber("Xbox Right-X",  (double)m_container.m_xbox.GetRightX() ); 
 
   //Swerve Drive
-  frc::SmartDashboard::PutNumber("FR-Pos",   m_container.m_drivetrain.m_frontRight.GetPivotEncoderPosition() ); 
-  frc::SmartDashboard::PutNumber("FR-MPos",  m_container.m_drivetrain.m_frontRight.GetPivotMotorPosition() ); 
-  frc::SmartDashboard::PutNumber("FR-ABS",   m_container.m_drivetrain.m_frontRight.GetPivotEncoderAbsoutePosition() ); 
+  frc::SmartDashboard::PutNumber("FR-Pos",   m_container.m_drivetrain.m_frontRight.GetSteerEncoderPosition() ); 
+  frc::SmartDashboard::PutNumber("FR-MPos",  m_container.m_drivetrain.m_frontRight.GetSteerMotorPosition() ); 
+  frc::SmartDashboard::PutNumber("FR-ABS",   m_container.m_drivetrain.m_frontRight.GetSteerEncoderAbsoutePosition() ); 
 
-  frc::SmartDashboard::PutNumber("FR-Pivot", m_container.m_drivetrain.m_frontRight.GetPivotMotor() ); 
+  frc::SmartDashboard::PutNumber("FR-Steer", m_container.m_drivetrain.m_frontRight.GetSteerMotor() ); 
 
 
 }

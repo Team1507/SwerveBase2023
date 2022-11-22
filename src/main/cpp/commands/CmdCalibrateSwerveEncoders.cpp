@@ -16,12 +16,12 @@ void CmdCalibrateSwerveEncoders::Initialize()
   if( m_step == 1 )
   {
     std::cout<<"Calibrate:  Step 1"<<std::endl;
-    m_container.m_drivetrain.m_frontRight.CalibratePivotEncoderAbsoutePositionStart();
+    m_container.m_drivetrain.m_frontRight.CalibrateSteerEncoderAbsoutePositionStart();
   }
   if( m_step == 2 )
   {
     std::cout<<"Calibrate:  Step 2"<<std::endl;
-    m_container.m_drivetrain.m_frontRight.CalibratePivotEncoderAbsoutePositionOffset();
+    m_container.m_drivetrain.m_frontRight.CalibrateSteerEncoderAbsoutePositionOffset();
   }
 
 }

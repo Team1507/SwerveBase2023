@@ -12,7 +12,7 @@ CmdDriveClearAll::CmdDriveClearAll() {
 
 void CmdDriveClearAll::Initialize() 
 {
-  m_container.m_drivetrain.ResetPivotEncoders();
+  m_container.m_drivetrain.ResetSteerEncoders();
 
   
 }
