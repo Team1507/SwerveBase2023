@@ -26,9 +26,14 @@ class SwerveModule : public frc2::SubsystemBase {
   //Steer Encoders
   double GetSteerEncoderPosition(void);
   double GetSteerEncoderAbsoutePosition(void);
-  
   double GetSteerMotorPosition(void);
   void   ResetSteerEncoders(void);
+
+  //Drive Encoders
+  int  GetDriveEncoder(void);
+  void HardResetDriveEncoder(void);
+  void SoftResetDriveEncoder(void);
+
 
 
   //Testing only!
@@ -55,4 +60,7 @@ class SwerveModule : public frc2::SubsystemBase {
 
 
   float m_desired_steer_angle; 
+
+  int   m_drive_encoder_zero;
+
 };

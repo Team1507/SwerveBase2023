@@ -53,6 +53,7 @@ SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEn
 
     //Init members
     m_desired_steer_angle = 90.0;   //Steer Angle of 90 = forward
+    m_drive_encoder_zero  = 0;
 
     std::cout << "Module Debug ID= " << m_dbgID << std::endl;
 
@@ -140,6 +141,8 @@ void SwerveModule::SetSteerAngle( float angle )
 }
 
 
+//  *** Steering Encoder **
+
 // Get relative encoder position since reset.  Does not wrap, keep incrementing 
 double SwerveModule::GetSteerEncoderPosition(void)
 {
@@ -164,6 +167,26 @@ void SwerveModule::ResetSteerEncoders(void)
     m_steerEncoder.SetPosition( GetSteerEncoderAbsoutePosition() );             //Cancoder relative position encoder                          
     m_steerMotor.SetSelectedSensorPosition( GetSteerEncoderAbsoutePosition() * ENCODER_TICKS_PER_DEGREE );  //Motor encoder
 }
+
+
+
+//  *** Drive Encoder **
+int  SwerveModule::GetDriveEncoder(void)
+{
+    return (m_driveMotor.GetSelectedSensorPosition(0) - m_drive_encoder_zero);
+}
+void SwerveModule::HardResetDriveEncoder(void)
+{
+    //Takes several cycles to complete
+    m_driveMotor.SetSelectedSensorPosition(0);
+    m_drive_encoder_zero = 0;
+}
+void SwerveModule::SoftResetDriveEncoder(void)
+{
+    m_drive_encoder_zero = m_driveMotor.GetSelectedSensorPosition(0);
+}
+
+
 
 /*
     * Testing Methods Only!

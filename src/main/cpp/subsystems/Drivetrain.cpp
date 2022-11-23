@@ -177,11 +177,18 @@ void Drivetrain::FieldcentricDrive( float fwdrev, float rightleft, float rotate 
 
 void Drivetrain::HardResetDriveEncoders(void)
 {
-
+    //** WARNING ***
+    //It takes several cycles to perform a hard reset on the Falcons
+    //Do not use encoders immediately after a reset
+    std::cout<< "Hard Encoder Reset" << std::endl;
+    for(int i=0;i<NUM_SWERVE_MODULES;i++)
+        m_moduleList[i]->HardResetDriveEncoder();
 }
 void Drivetrain::ResetDriveEncoders(void)
 {
-
+    std::cout<< "Soft Encoder Reset" << std::endl;
+    for(int i=0;i<NUM_SWERVE_MODULES;i++)
+        m_moduleList[i]->SoftResetDriveEncoder();
 }
 void Drivetrain::ResetSteerEncoders(void)
 {
