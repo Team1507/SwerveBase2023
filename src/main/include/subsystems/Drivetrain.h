@@ -36,13 +36,18 @@ class Drivetrain : public frc2::SubsystemBase {
  private:
 
 
+
   //Swerve Modules
+  //    FL^FR
+  //    RL RR
   SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_ENCODER_CAN_ID, "FR" };
+  SwerveModule m_frontLeft { FRONT_LEFT_DRIVE_MOTOR_CAN_ID,   FRONT_LEFT_STEER_MOTOR_CAN_ID,   FRONT_LEFT_STEER_ENCODER_CAN_ID,  "FL" };
+  SwerveModule m_rearLeft  { REAR_LEFT_DRIVE_MOTOR_CAN_ID,    REAR_LEFT_STEER_MOTOR_CAN_ID,    REAR_LEFT_STEER_ENCODER_CAN_ID,   "RL" };
+  SwerveModule m_rearRight { REAR_RIGHT_DRIVE_MOTOR_CAN_ID,   REAR_RIGHT_STEER_MOTOR_CAN_ID,   REAR_RIGHT_STEER_ENCODER_CAN_ID,  "RR" };
  
 
   //Array of pointers to swerve modules, to make processing eeach module more convenient
   SwerveModule* m_moduleList[NUM_SWERVE_MODULES];
-
 
 
 };

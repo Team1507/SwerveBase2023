@@ -71,9 +71,9 @@ Drivetrain::Drivetrain()
 
     //Setup module list
     m_moduleList[FR_INDEX] = &m_frontRight;    
-    // moduleList[FL_INDEX] = &m_frontRight;    
-    // moduleList[RL_INDEX] = &m_frontRight;    
-    // moduleList[RR_INDEX] = &m_frontRight;    
+    m_moduleList[FL_INDEX] = &m_frontLeft;    
+    m_moduleList[RL_INDEX] = &m_rearLeft;    
+    m_moduleList[RR_INDEX] = &m_rearRight;    
 
 }
 

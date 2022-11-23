@@ -6,7 +6,7 @@
 
 
 //********** DRIVETRAIN CONSTANTS **********
-#define NUM_SWERVE_MODULES  1
+#define NUM_SWERVE_MODULES  4
 //------------------------------------------
 #define FRONT_RIGHT_DRIVE_MOTOR_CAN_ID     7
 #define FRONT_RIGHT_STEER_MOTOR_CAN_ID     8
