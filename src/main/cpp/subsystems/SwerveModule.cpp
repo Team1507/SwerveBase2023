@@ -36,10 +36,10 @@ SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEn
     m_steerMotor.SetSelectedSensorPosition(0.0,0,10);
 
     //Initialize steer PID
-    m_steerMotor.Config_kF(0, 0.0, 10);
-    m_steerMotor.Config_kP(0, 0.1, 10);
-    m_steerMotor.Config_kI(0, 0.0, 10);
-    m_steerMotor.Config_kD(0, 0.0, 10);
+    m_steerMotor.Config_kF(0, STEER_PID_kF, 10);
+    m_steerMotor.Config_kP(0, STEER_PID_kP, 10);
+    m_steerMotor.Config_kI(0, STEER_PID_kI, 10);
+    m_steerMotor.Config_kD(0, STEER_PID_kD, 10);
 
     //m_steerMotor.ConfigAllowableClosedloopError( 0, 1.0 * ENCODER_TICKS_PER_DEGREE, 10 );
 

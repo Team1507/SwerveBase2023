@@ -83,7 +83,7 @@ void Drivetrain::Periodic()
 
 
 
-    
+
 }
 
 
@@ -187,5 +187,23 @@ void Drivetrain::ResetSteerEncoders(void)
 {
     for(int i=0;i<NUM_SWERVE_MODULES;i++)
         m_moduleList[i]->ResetSteerEncoders();
+}
+
+
+
+
+
+//Absolute Encoder calibration
+//All wheels must manually be set to 0 degrees before calling
+//Due to CAN bus lag, these are split into 2 commands
+void Drivetrain::CalibrateSteerEncoderAbsoutePositionStart(void)
+{
+    for(int i=0;i<NUM_SWERVE_MODULES;i++)
+        m_moduleList[i]->CalibrateSteerEncoderAbsoutePositionStart();
+}
+void Drivetrain::CalibrateSteerEncoderAbsoutePositionOffset(void)
+{
+    for(int i=0;i<NUM_SWERVE_MODULES;i++)
+        m_moduleList[i]->CalibrateSteerEncoderAbsoutePositionOffset();
 }
 

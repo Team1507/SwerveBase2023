@@ -28,13 +28,16 @@ class Drivetrain : public frc2::SubsystemBase {
 
 
 
-  //These should be private!!!!!
-  //Swerve Modules
-  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_ENCODER_CAN_ID, "FR" };
+  //Absolute Encoder calibration
+  void   CalibrateSteerEncoderAbsoutePositionStart(void);
+  void   CalibrateSteerEncoderAbsoutePositionOffset(void);
 
 
  private:
 
+
+  //Swerve Modules
+  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_ENCODER_CAN_ID, "FR" };
  
 
   //Array of pointers to swerve modules, to make processing eeach module more convenient
