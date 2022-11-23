@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/SwerveModule.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "Robot.h"
 #include <iostream>
 
@@ -13,10 +14,11 @@
 #define ENCODER_TICKS_PER_DEGREE    (43885.7/360.0)
 
 
-SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEncoderCanID )
+SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEncoderCanID, std::string debugID )
             : m_driveMotor(driveMotorCanID),
               m_steerMotor(steerMotorCanID),
-              m_steerEncoder(steerEncoderCanID)
+              m_steerEncoder(steerEncoderCanID),
+              m_dbgID(debugID)
 {
 
     //Initialize Drive Motor
@@ -52,11 +54,23 @@ SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEn
     //Init members
     m_desired_steer_angle = 90.0;   //Steer Angle of 90 = forward
 
+    std::cout << "Module Debug ID= " << m_dbgID << std::endl;
+
 }
 
 // This method will be called once per scheduler run
 void SwerveModule::Periodic() 
 {
+
+    //Debug Output
+    frc::SmartDashboard::PutNumber(m_dbgID + "-EncAbs",  GetSteerEncoderAbsoutePosition() ); 
+    frc::SmartDashboard::PutNumber(m_dbgID + "-EncPos",  GetSteerEncoderPosition() ); 
+    frc::SmartDashboard::PutNumber(m_dbgID + "-MotPos",  GetSteerMotorPosition() ); 
+    frc::SmartDashboard::PutNumber(m_dbgID + "-AngReq",  m_desired_steer_angle ); 
+
+    frc::SmartDashboard::PutNumber(m_dbgID + "-DrvPwr",  m_driveMotor.GetMotorOutputPercent() ); 
+
+
 //
 //    //Manual control of Steer motor
 //    //float curr_steer_angle = GetSteerEncoderPosition();

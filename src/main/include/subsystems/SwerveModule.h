@@ -10,7 +10,7 @@
 
 class SwerveModule : public frc2::SubsystemBase {
  public:
-  SwerveModule(const int driveMotorCanID, const int steerMotorCanID, const int steerEncoderCanID);
+  SwerveModule(const int driveMotorCanID, const int steerMotorCanID, const int steerEncoderCanID, const std::string debugID);
 
   void Periodic() override;
 
@@ -44,14 +44,15 @@ class SwerveModule : public frc2::SubsystemBase {
   void   CalibrateSteerEncoderAbsoutePositionOffset(void);
  
  
-  float m_desired_steer_angle; 
+
  
  private:
 
   WPI_TalonFX   m_driveMotor;
   WPI_TalonFX   m_steerMotor;
   WPI_CANCoder  m_steerEncoder;
+  std::string   m_dbgID;
 
 
-
+  float m_desired_steer_angle; 
 };

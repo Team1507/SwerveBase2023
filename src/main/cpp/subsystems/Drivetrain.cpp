@@ -15,11 +15,11 @@
 //     RL     RR
 //
 
-#define NUM_MODULES  1
-#define FR 0
-#define FL 1
-#define RL 2
-#define RR 3
+//moduleListIndex
+#define FR_INDEX 0
+#define FL_INDEX 1
+#define RL_INDEX 2
+#define RR_INDEX 3
 
 
 #define DRIVEBASE_WIDTH     32.0  // size in X-axis in inches
@@ -40,22 +40,24 @@
 //*********************
 //  Vector Init Stuff
 //
+
+//Storage for vector data
 typedef struct
 {
     float x;    //x component of vector 
     float y;    //y component of vector
 } vector_t;
 
-
 //Robot Unit Vectors for each module to calculate rotation effect on motion vector   
 //Normal vectors are vectors of length 1, perpendicular to the line between center or robot to each module, in direction of positive rotation (CCW)
 // Therefore, the values are simply a ratio of height/width and center-to-module distance
-vector_t moduleRotationUnitVector[NUM_MODULES] = {
+const vector_t moduleRotationUnitVector[] = {
 
     { -W_DIV_2/C2M_D,  W_DIV_2/C2M_D },      //[0] Front Right  -X  +Y
-
+    { -W_DIV_2/C2M_D, -W_DIV_2/C2M_D },      //[1] Front Left   -X  -Y
+    {  W_DIV_2/C2M_D, -W_DIV_2/C2M_D },      //[2] Rear  Left   +X  -Y
+    {  W_DIV_2/C2M_D,  W_DIV_2/C2M_D },      //[3] Rear  Right  +X  +Y
 };
-
 
 
 
@@ -63,27 +65,28 @@ vector_t moduleRotationUnitVector[NUM_MODULES] = {
 Drivetrain::Drivetrain()
 {
 
-    //Testing - Set Swerve Steer Angle
-    frc::SmartDashboard::PutNumber("SetSteerAngle", 0.0);  
-
+    //Testing
     frc::SmartDashboard::PutNumber("SetGyroAngle", 0.0);
 
+
+    //Setup module list
+    m_moduleList[FR_INDEX] = &m_frontRight;    
+    // moduleList[FL_INDEX] = &m_frontRight;    
+    // moduleList[RL_INDEX] = &m_frontRight;    
+    // moduleList[RR_INDEX] = &m_frontRight;    
 
 }
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() 
 {
-    //m_frontRight.SetSteerAngle( frc::SmartDashboard::GetNumber("SetSteerAngle", 0.0) );
+
+
+
+    
 }
 
 
-void Drivetrain::Drive( float lx, float ly, float rx )
-{
-    //m_frontRight.SetDriveMotor( ly );
-
-    //m_frontRight.SetSteerMotor( rx * 0.15 );
-}
 
 
 //Robot Centric Drive
@@ -96,15 +99,15 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
 
     vector_t robotVector = {rightleft, fwdrev };       
 
-    vector_t moduleVectors[NUM_MODULES];     //Working vector calculations
+    vector_t moduleVectors[NUM_SWERVE_MODULES];     //Working vector calculations
 
-    float    modulePower[NUM_MODULES];       //Module drive power
-    float    moduleAngle[NUM_MODULES];       //Module drive angle
+    float    modulePower[NUM_SWERVE_MODULES];       //Module drive power
+    float    moduleAngle[NUM_SWERVE_MODULES];       //Module drive angle
 
     float    maxPower = 0.0;
 
     //Create drive vectors and drive angles for each module
-    for(int i=0; i<NUM_MODULES;i++)
+    for(int i=0; i<NUM_SWERVE_MODULES;i++)
     {
 
         //module_X_vector = robot_X_vector + rotate scalar * rotational normal vector
@@ -132,7 +135,7 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
     //Check for normalization if maxPower > 1.0
     if( maxPower > 1.0 )
     {
-        for(int i=0; i<NUM_MODULES; i++)
+        for(int i=0; i<NUM_SWERVE_MODULES; i++)
             modulePower[i] = modulePower[i] / maxPower;
     }
 
@@ -141,23 +144,21 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
     if( maxPower < MINIMUM_NEEDED_POWER )
     {
         //Not high enough.  Tell everytning to stop!
-        // for(int i=0; i<NUM_MODULES; i++)
-        //     //something
-        m_frontRight.SetDriveMotor(0.0);
-        m_frontRight.SetSteerMotor(0.0);
+        for(int i=0; i<NUM_SWERVE_MODULES; i++)
+        {
+            m_moduleList[i]->SetDriveMotor(0.0);
+            m_moduleList[i]->SetSteerMotor(0.0);       
+        }
         return;
     }
 
 
     //Update modues with new calculations
-    for(int i=0; i<NUM_MODULES; i++)
+    for(int i=0; i<NUM_SWERVE_MODULES; i++)
     {
-        m_frontRight.SetDriveMotor( modulePower[i] );
-
-        m_frontRight.SetSteerAngle( moduleAngle[i] );
-
+        m_moduleList[i]->SetDriveMotor( modulePower[i] );
+        m_moduleList[i]->SetSteerAngle( moduleAngle[i] );
     }
-
 
 }
 
@@ -184,6 +185,7 @@ void Drivetrain::ResetDriveEncoders(void)
 }
 void Drivetrain::ResetSteerEncoders(void)
 {
-    m_frontRight.ResetSteerEncoders();
+    for(int i=0;i<NUM_SWERVE_MODULES;i++)
+        m_moduleList[i]->ResetSteerEncoders();
 }
 

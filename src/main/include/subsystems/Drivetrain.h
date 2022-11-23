@@ -17,8 +17,6 @@ class Drivetrain : public frc2::SubsystemBase {
 
   void Periodic() override;
 
-  void Drive( float lx, float ly, float rx  );  //Test
-
   void RobotcentricDrive( float fwdrev, float rightleft, float rotate );
   void FieldcentricDrive( float fwdrev, float rightleft, float rotate );
 
@@ -29,12 +27,18 @@ class Drivetrain : public frc2::SubsystemBase {
   void ResetSteerEncoders(void);
 
 
+
   //These should be private!!!!!
-  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_ENCODER_CAN_ID };
+  //Swerve Modules
+  SwerveModule m_frontRight{ FRONT_RIGHT_DRIVE_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_MOTOR_CAN_ID,  FRONT_RIGHT_STEER_ENCODER_CAN_ID, "FR" };
+
 
  private:
 
+ 
 
+  //Array of pointers to swerve modules, to make processing eeach module more convenient
+  SwerveModule* m_moduleList[NUM_SWERVE_MODULES];
 
 
 
