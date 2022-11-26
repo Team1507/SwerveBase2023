@@ -14,8 +14,13 @@ class Drivetrain : public frc2::SubsystemBase {
  public:
   Drivetrain();
 
-
   void Periodic() override;
+
+
+  enum driveType { ROBOTCENTRIC, FIELDCENTRIC };
+  void SetDriveType( driveType type );
+  driveType GetDriveType( void );
+
 
   void RobotcentricDrive( float fwdrev, float rightleft, float rotate );
   void FieldcentricDrive( float fwdrev, float rightleft, float rotate );
@@ -35,7 +40,7 @@ class Drivetrain : public frc2::SubsystemBase {
 
  private:
 
-
+  driveType m_driveType;  
 
   //Swerve Modules
   //    FL^FR

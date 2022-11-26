@@ -68,6 +68,7 @@ Drivetrain::Drivetrain()
     //Testing
     frc::SmartDashboard::PutNumber("SetGyroAngle", 0.0);
 
+    m_driveType = ROBOTCENTRIC;
 
     //Setup module list
     m_moduleList[FR_INDEX] = &m_frontRight;    
@@ -81,12 +82,17 @@ Drivetrain::Drivetrain()
 void Drivetrain::Periodic() 
 {
 
-
-
-
 }
 
 
+void Drivetrain::SetDriveType( driveType type )
+{
+    m_driveType = type;
+}
+Drivetrain::driveType Drivetrain::GetDriveType( void )
+{
+    return m_driveType;
+}
 
 
 //Robot Centric Drive

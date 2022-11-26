@@ -16,6 +16,7 @@
 #include "commands/CmdTestTwo.h"
 #include "commands/CmdCalibrateSwerveEncoders.h"
 #include "commands/CmdDriveClearAll.h"
+#include "commands/CmdDriveTypeToggle.h"
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   // Initialize all of your commands and subsystems here
@@ -31,6 +32,7 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 
   frc::SmartDashboard::PutData( "CmdDriveClearAll", new CmdDriveClearAll());
 
+  frc::SmartDashboard::PutData( "CmdDriveTypeToggle", new CmdDriveTypeToggle());
 
 
   frc::SmartDashboard::PutData( "CmdCalSwerveEnc_1", new CmdCalibrateSwerveEncoders(1));
