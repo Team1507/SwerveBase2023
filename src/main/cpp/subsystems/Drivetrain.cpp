@@ -127,7 +127,7 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
         //Steer angle is the arcTan of the module vector
         // Tan(Theta) = y/x,   Theta = arctan(y/x)
         //We use function arctan2 to account for the discontinuity with -x values
-        //Note usage:  arctan2 (y,x), answer in radians
+        //Note usage:  arctan2 (y,x), answer in radians [-pi to pi], converted to degrees [-180 to 180]
         moduleAngle[i] = RAD2DEG(  atan2f(moduleVectors[i].y,  moduleVectors[i].x)  );
 
     }
@@ -156,8 +156,10 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
     //Update modues with new calculations
     for(int i=0; i<NUM_SWERVE_MODULES; i++)
     {
-        m_moduleList[i]->SetDriveMotor( modulePower[i] );
-        m_moduleList[i]->SetSteerAngle( moduleAngle[i] );
+//      m_moduleList[i]->SetSteerAngle( moduleAngle[i] );       //Old style angle calculation
+        m_moduleList[i]->SetSteerAngleV2( moduleAngle[i] );     //New style with motor inversion
+        m_moduleList[i]->SetDriveMotor( modulePower[i] );       //Set Angle first in case drive motor inversion is active.
+
     }
 
 }

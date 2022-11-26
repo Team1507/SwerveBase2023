@@ -18,8 +18,8 @@ class SwerveModule : public frc2::SubsystemBase {
 
   //Set Modes
   void SetSteerAngle( float angle );
-
-
+  void SetSteerAngleV2( float angle );
+  void SetDriveMotor( float power );
 
   
 
@@ -35,13 +35,15 @@ class SwerveModule : public frc2::SubsystemBase {
   void SoftResetDriveEncoder(void);
 
 
-
-  //Testing only!
+  //Motor Status
   float  GetDriveMotor( void );
   float  GetSteerMotor( void );
-  void   SetDriveMotor( float power );
-  void   SetSteerMotor( float power );  
+  bool   GetDriveInvertion( void );
 
+
+
+  //Testing only!  
+  void   SetSteerMotor( float power );  
 
 
   //Absolute Encoder calibration
@@ -62,5 +64,6 @@ class SwerveModule : public frc2::SubsystemBase {
   float m_desired_steer_angle; 
 
   int   m_drive_encoder_zero;
+  bool  m_invert_drive;       //invert drive direction
 
 };

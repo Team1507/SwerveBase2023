@@ -116,6 +116,7 @@ void SwerveModule::Periodic()
 
 //Set angle of module
 //Input Range[-180 to 180]
+//Deturmines the shortest turning path (CW or CCW) to desired angle
 void SwerveModule::SetSteerAngle( float angle )
 {
     m_desired_steer_angle = angle;
@@ -125,7 +126,7 @@ void SwerveModule::SetSteerAngle( float angle )
     //Get current position of the drive motor
     float curr_steer_angle    = GetSteerEncoderAbsoutePosition();               //return in degrees [-180:180]
 
-    float angle_error = m_desired_steer_angle - curr_steer_angle;               //Calculate angle delta
+    float angle_error = m_desired_steer_angle - curr_steer_angle;               //Calculate angle delta, +error = CCW move
 
     //if angle error is > 180, its faster to go the oppisite way
     if( angle_error >=  180.0 )  angle_error -= 360.0;
@@ -139,6 +140,43 @@ void SwerveModule::SetSteerAngle( float angle )
     m_steerMotor.Set(ControlMode::Position,  target_position );
 
 }
+
+
+//Set angle of module
+//Input Range[-180 to 180]
+//Uses Drive motor inversion to limit maximum steer angle move to +/- 90 degrees.
+void SwerveModule::SetSteerAngleV2( float angle )
+{
+
+    m_desired_steer_angle = angle;  
+    m_invert_drive        = false;
+
+
+    //Crossover logic and PID loop
+
+    //Get current position of the drive motor
+    float curr_steer_angle    = GetSteerEncoderAbsoutePosition();               //return in degrees [-180:180]
+
+    float angle_error = m_desired_steer_angle - curr_steer_angle;               //Calculate angle delta, +error = CCW move
+
+    //Check angle
+    if( angle_error >=  180.0 ) { angle_error -= 360.0;     m_invert_drive = true;    }
+    if( angle_error <= -180.0 ) { angle_error += 360.0;     m_invert_drive = true;    }
+    if( angle_error >=   90.0 ) { angle_error -= 180.0;     m_invert_drive = true;    }
+    if( angle_error <=  -90.0 ) { angle_error += 180.0;     m_invert_drive = true;    }
+
+
+    //Now with angle error, caculate how many motor encoder ticks it needs to move
+    float curr_steer_position = m_steerMotor.GetSelectedSensorPosition(0);      //return in encoder counts
+
+    float target_position = curr_steer_position + (angle_error* ENCODER_TICKS_PER_DEGREE);  
+
+
+    //Update steer motor positional PIC controller
+    m_steerMotor.Set(ControlMode::Position,  target_position );
+
+}
+
 
 
 //  *** Steering Encoder **
@@ -188,9 +226,7 @@ void SwerveModule::SoftResetDriveEncoder(void)
 
 
 
-/*
-    * Testing Methods Only!
-    */
+
 float SwerveModule::GetDriveMotor( void )
 {
     return m_driveMotor.Get();
@@ -201,13 +237,25 @@ float SwerveModule::GetSteerMotor( void )
 }
 void SwerveModule::SetDriveMotor( float power )
 {
-    m_driveMotor.Set(ControlMode::PercentOutput, power);
+    if( m_invert_drive )
+        m_driveMotor.Set(ControlMode::PercentOutput, -power);
+    else
+        m_driveMotor.Set(ControlMode::PercentOutput,  power);
+
 }
+bool SwerveModule::GetDriveInvertion( void )
+{
+    return m_invert_drive;
+}
+
+
+/*
+ * Testing Methods Only!
+ */
 void SwerveModule::SetSteerMotor( float power )
 {
     m_steerMotor.Set(ControlMode::PercentOutput, power);
 }
-
 
 
 //*********************************************
