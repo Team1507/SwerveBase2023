@@ -7,6 +7,7 @@
 #include <frc2/command/SubsystemBase.h>
 
 #include "subsystems/SwerveModule.h"
+#include "AHRS.h"
 
 #include "Constants.h"
 
@@ -31,7 +32,13 @@ class Drivetrain : public frc2::SubsystemBase {
   void ResetDriveEncoders(void);
   void ResetSteerEncoders(void);
 
-
+  //NavX
+  bool   IsGyroConnected(void);
+  double GetGyroYaw(void);            //yaw: Relative -180 to +180
+  double GetGyroAngle(void);          //angle: absolute -inf to +inf
+  double GetGyroRate(void);
+  void   ZeroGyro(void); 
+  bool   IsGyroBusy(void);            //Busy Calibrating
 
   //Absolute Encoder calibration
   void   CalibrateSteerEncoderAbsoutePositionStart(void);
@@ -41,6 +48,8 @@ class Drivetrain : public frc2::SubsystemBase {
  private:
 
   driveType m_driveType;  
+
+  AHRS m_ahrs{frc::SPI::Port::kMXP};	    //NavX
 
   //Swerve Modules
   //    FL^FR

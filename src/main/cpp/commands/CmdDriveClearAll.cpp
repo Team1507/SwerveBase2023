@@ -13,6 +13,7 @@ CmdDriveClearAll::CmdDriveClearAll() {
 void CmdDriveClearAll::Initialize() 
 {
   m_container.m_drivetrain.ResetSteerEncoders();
+  m_container.m_drivetrain.ZeroGyro();
 
   
 }
@@ -23,6 +24,9 @@ void CmdDriveClearAll::Execute() {}
 void CmdDriveClearAll::End(bool interrupted) {}
 
 
-bool CmdDriveClearAll::IsFinished() {
-  return true;
+bool CmdDriveClearAll::IsFinished() 
+{
+  //Don't move until Gyro is finished calibrating
+  return !m_container.m_drivetrain.IsGyroBusy();
+  //return true;
 }

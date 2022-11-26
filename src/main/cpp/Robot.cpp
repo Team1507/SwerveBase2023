@@ -22,7 +22,9 @@ void Robot::RobotInit()
   m_container.m_drivetrain.HardResetDriveEncoders();
   //m_container.m_drivetrain.ResetDriveEncoders();
   m_container.m_drivetrain.ResetSteerEncoders();
+  m_container.m_drivetrain.ZeroGyro(); 
 
+  
 }
 
 
@@ -67,6 +69,7 @@ void Robot::TeleopInit()
 
 void Robot::TeleopPeriodic() {}
 
+
 void Robot::WriteToSmartDashboard(void)
 {
 
@@ -75,8 +78,12 @@ void Robot::WriteToSmartDashboard(void)
   frc::SmartDashboard::PutNumber("Xbox Left-X",   (double)m_container.m_xbox.GetLeftX() ); 
   frc::SmartDashboard::PutNumber("Xbox Right-X",  (double)m_container.m_xbox.GetRightX() ); 
 
-  frc::SmartDashboard::PutBoolean("DriveMode",    (bool)m_container.m_drivetrain.GetDriveType() ); 
+  frc::SmartDashboard::PutBoolean("DriveType",    (bool)m_container.m_drivetrain.GetDriveType() ); 
 
+  //Nax-X
+  frc::SmartDashboard::PutBoolean("navx_IsConn",  m_container.m_drivetrain.IsGyroConnected() );
+  frc::SmartDashboard::PutNumber("navx_Yaw",      m_container.m_drivetrain.GetGyroYaw()      );
+  frc::SmartDashboard::PutNumber("navx_Angle",    m_container.m_drivetrain.GetGyroAngle()    );
 
 }
 
