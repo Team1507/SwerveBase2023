@@ -65,9 +65,6 @@ const vector_t moduleRotationUnitVector[] = {
 Drivetrain::Drivetrain()
 {
 
-    //Testing
-    frc::SmartDashboard::PutNumber("SetGyroAngle", 0.0);
-
     m_driveType = ROBOTCENTRIC;
 
     //Setup module list
@@ -175,12 +172,11 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
 // Rotate inputs around gyro angle
 void Drivetrain::FieldcentricDrive( float fwdrev, float rightleft, float rotate )
 {
-    //float gyro_angle = DEG2RAD( frc::SmartDashboard::GetNumber("SetGyroAngle", 0.0)  );         //Simulate for now
+
     float gyro_angle = DEG2RAD( GetGyroYaw()  );        
 
-
     float new_rightleft =  ( rightleft * cosf(gyro_angle) ) - ( fwdrev * sinf(gyro_angle) );    //New X-Axis after rotation
-    float new_fwdrev    =  ( rightleft * sinf(gyro_angle) ) - ( fwdrev * cosf(gyro_angle) );    //New Y-Axis after rotation
+    float new_fwdrev    =  ( rightleft * sinf(gyro_angle) ) + ( fwdrev * cosf(gyro_angle) );    //New Y-Axis after rotation
 
     RobotcentricDrive( new_fwdrev, new_rightleft, rotate);
 }
