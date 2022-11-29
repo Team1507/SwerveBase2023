@@ -45,10 +45,10 @@ void CmdDriveWithGamepad::Execute()
 
   //Run depending on Mode:  
 
-
-  //if( robotcentric )
+  if( m_container.m_drivetrain.GetDriveType() == Drivetrain::ROBOTCENTRIC )
     m_container.m_drivetrain.RobotcentricDrive( yL,  xL,  xR );
-
+  else
+    m_container.m_drivetrain.FieldcentricDrive( yL,  xL,  xR );
 
 
 }

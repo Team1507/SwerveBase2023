@@ -28,7 +28,7 @@
 
 //Steer PID
 #define STEER_PID_kF        0.0
-#define STEER_PID_kP        0.1
+#define STEER_PID_kP        0.05
 #define STEER_PID_kI        0.0
 #define STEER_PID_kD        0.0
 

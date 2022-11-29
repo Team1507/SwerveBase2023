@@ -22,15 +22,15 @@
 #define RR_INDEX 3
 
 
-#define DRIVEBASE_WIDTH     32.0  // size in X-axis in inches
-#define DRIVEBASE_HEIGHT    32.0  // size in Y-axis in inches
+#define DRIVEBASE_WIDTH     25.0  // size in X-axis in inches
+#define DRIVEBASE_HEIGHT    25.0  // size in Y-axis in inches
 
 #define W_DIV_2  (DRIVEBASE_WIDTH/2.0)
 #define H_DIV_2  (DRIVEBASE_HEIGHT/2.0)
 
 #define C2M_D   sqrtf(W_DIV_2*W_DIV_2 + H_DIV_2*H_DIV_2 )       //Center-to-module distance 
 
-#define MINIMUM_NEEDED_POWER 0.1        //minimum power needed to move
+#define MINIMUM_NEEDED_POWER 0.025        //minimum power needed to move
 
 
 
@@ -175,7 +175,9 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
 // Rotate inputs around gyro angle
 void Drivetrain::FieldcentricDrive( float fwdrev, float rightleft, float rotate )
 {
-    float gyro_angle = DEG2RAD( frc::SmartDashboard::GetNumber("SetGyroAngle", 0.0)  );         //Simulate for now
+    //float gyro_angle = DEG2RAD( frc::SmartDashboard::GetNumber("SetGyroAngle", 0.0)  );         //Simulate for now
+    float gyro_angle = DEG2RAD( GetGyroYaw()  );        
+
 
     float new_rightleft =  ( rightleft * cosf(gyro_angle) ) - ( fwdrev * sinf(gyro_angle) );    //New X-Axis after rotation
     float new_fwdrev    =  ( rightleft * sinf(gyro_angle) ) - ( fwdrev * cosf(gyro_angle) );    //New Y-Axis after rotation
