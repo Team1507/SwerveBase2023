@@ -162,9 +162,12 @@ void SwerveModule::SetSteerAngleV2( float angle )
 
     float angle_error = m_desired_steer_angle - curr_steer_angle;               //Calculate angle delta, +error = CCW move
 
-    //Check angle
-    if( angle_error >=  180.0 ) { angle_error -= 360.0;     m_invert_drive = true;    }
-    if( angle_error <= -180.0 ) { angle_error += 360.0;     m_invert_drive = true;    }
+
+    //Bound error to +/- 180
+    if( angle_error >  180.0 ) { angle_error -= 360.0; }
+    if( angle_error < -180.0 ) { angle_error += 360.0; }
+
+    //Check angle to minimize steering turn angle
     if( angle_error >=   90.0 ) { angle_error -= 180.0;     m_invert_drive = true;    }
     if( angle_error <=  -90.0 ) { angle_error += 180.0;     m_invert_drive = true;    }
 
