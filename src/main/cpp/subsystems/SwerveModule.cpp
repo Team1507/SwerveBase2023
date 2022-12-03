@@ -11,8 +11,14 @@
 //Falcon steer ticks per degree
 // MK4i steer ratio 150/7:1.   Integrated encoder = 2048 ticks/rotation
 // Therefore 150/7 * 2048 =43885.7
-#define ENCODER_TICKS_PER_DEGREE    (43885.7/360.0)
+#define STEER_ENCODER_TICKS_PER_DEGREE    (43885.7/360.0)
 
+//Falcon drive ticks per inch
+//MK4i drive ratio = 6.75:1
+//Integrated encoder = 2048 ticks/rotation
+//Tire diameter = 4inches,  circumference =4PI   (C=2*PI*r) 
+//Therefore (2048 * 6.75)/4PI = 1100
+#define DRIVE_ENCODER_TICKS_PER_INCH      (1100)            //Needs to be verified
 
 SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEncoderCanID, std::string debugID )
             : m_driveMotor(driveMotorCanID),
@@ -44,7 +50,7 @@ SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEn
     m_steerMotor.Config_kI(0, STEER_PID_kI, 10);
     m_steerMotor.Config_kD(0, STEER_PID_kD, 10);
 
-    //m_steerMotor.ConfigAllowableClosedloopError( 0, 1.0 * ENCODER_TICKS_PER_DEGREE, 10 );
+    //m_steerMotor.ConfigAllowableClosedloopError( 0, 1.0 * STEER_ENCODER_TICKS_PER_DEGREE, 10 );
 
 
 
@@ -57,6 +63,8 @@ SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEn
     //Init members
     m_desired_steer_angle = 90.0;   //Steer Angle of 90 = forward
     m_drive_encoder_zero  = 0;
+
+    ResetModuleOdometry();
 
     std::cout << "Module Debug ID= " << m_dbgID << std::endl;
 
@@ -73,7 +81,10 @@ void SwerveModule::Periodic()
     frc::SmartDashboard::PutNumber(m_dbgID + "-AngReq",  m_desired_steer_angle ); 
 
     frc::SmartDashboard::PutNumber(m_dbgID + "-DrvPwr",  m_driveMotor.GetMotorOutputPercent() ); 
+    frc::SmartDashboard::PutNumber(m_dbgID + "-DrvEnc",  GetDriveEncoder() ); 
 
+
+    ModuleOdometryPeriodic();
 
 //
 //    //Manual control of Steer motor
@@ -138,7 +149,7 @@ void SwerveModule::SetSteerAngle( float angle )
 
     float curr_steer_position = m_steerMotor.GetSelectedSensorPosition(0);      //return in encoder counts
 
-    float target_position = curr_steer_position + (angle_error* ENCODER_TICKS_PER_DEGREE);  
+    float target_position = curr_steer_position + (angle_error* STEER_ENCODER_TICKS_PER_DEGREE);  
 
     m_steerMotor.Set(ControlMode::Position,  target_position );
 
@@ -151,11 +162,8 @@ void SwerveModule::SetSteerAngle( float angle )
 void SwerveModule::SetSteerAngleV2( float angle )
 {
 
-    m_desired_steer_angle = angle;  
-    m_invert_drive        = false;
-
-
-    //Crossover logic and PID loop
+    bool invert_drive     = false;      //Assume no inversion needed
+    m_desired_steer_angle = angle;      //Store for reference
 
     //Get current position of the drive motor
     float curr_steer_angle    = GetSteerEncoderAbsoutePosition();               //return in degrees [-180:180]
@@ -168,18 +176,19 @@ void SwerveModule::SetSteerAngleV2( float angle )
     if( angle_error < -180.0 ) { angle_error += 360.0; }
 
     //Check angle to minimize steering turn angle
-    if( angle_error >=   90.0 ) { angle_error -= 180.0;     m_invert_drive = true;    }
-    if( angle_error <=  -90.0 ) { angle_error += 180.0;     m_invert_drive = true;    }
+    if( angle_error >=   90.0 ) { angle_error -= 180.0;     invert_drive = true;    }
+    if( angle_error <=  -90.0 ) { angle_error += 180.0;     invert_drive = true;    }
 
 
     //Now with angle error, caculate how many motor encoder ticks it needs to move
     float curr_steer_position = m_steerMotor.GetSelectedSensorPosition(0);      //return in encoder counts
 
-    float target_position = curr_steer_position + (angle_error* ENCODER_TICKS_PER_DEGREE);  
+    float target_position = curr_steer_position + (angle_error* STEER_ENCODER_TICKS_PER_DEGREE);  
 
 
     //Update steer motor positional PIC controller
     m_steerMotor.Set(ControlMode::Position,  target_position );
+    m_invert_drive = invert_drive;
 
 }
 
@@ -202,14 +211,14 @@ double SwerveModule::GetSteerEncoderAbsoutePosition(void)
 // Get relative position from motor
 double SwerveModule::GetSteerMotorPosition(void)
 {
-    return m_steerMotor.GetSelectedSensorPosition(0) / ENCODER_TICKS_PER_DEGREE;    
+    return m_steerMotor.GetSelectedSensorPosition(0) / STEER_ENCODER_TICKS_PER_DEGREE;    
 }
 
 void SwerveModule::ResetSteerEncoders(void)
 {
     //Align encoders to Absolute Encoder
     m_steerEncoder.SetPosition( GetSteerEncoderAbsoutePosition() );             //Cancoder relative position encoder                          
-    m_steerMotor.SetSelectedSensorPosition( GetSteerEncoderAbsoutePosition() * ENCODER_TICKS_PER_DEGREE );  //Motor encoder
+    m_steerMotor.SetSelectedSensorPosition( GetSteerEncoderAbsoutePosition() * STEER_ENCODER_TICKS_PER_DEGREE );  //Motor encoder
 }
 
 
@@ -253,6 +262,77 @@ bool SwerveModule::GetDriveInvertion( void )
 {
     return m_invert_drive;
 }
+
+
+
+
+//**************** Odometry *********************
+void SwerveModule::ModuleOdometryPeriodic(void)
+{
+    //Read Encoders and find delta distance traveled in inches
+    int curr_drive_encoder  = GetDriveEncoder();
+
+    // TIMESTAMP
+    double curr_timestamp = (double)m_timer.GetFPGATimestamp();
+
+    double delta_encoder  = (curr_drive_encoder  - m_prev_drive_encoder)  / (double)DRIVE_ENCODER_TICKS_PER_INCH;
+
+    double distance = delta_encoder / 2.0;
+
+    //Calculate new X and Y based on Gyro
+    double angle = GetModuleOdometryHeading();
+
+    m_curr_x += distance * sin( (angle * M_PI)/180.0 );
+    m_curr_y += distance * cos( (angle * M_PI)/180.0 );
+
+    //Calculate Velocity
+    double delta_time = curr_timestamp - m_prev_timestamp;
+
+    m_curr_v  =  distance / delta_time;
+
+
+    //Update parameters for next run
+    m_prev_drive_encoder  = curr_drive_encoder;
+    m_prev_timestamp      = curr_timestamp;
+}
+
+//********************************************
+void SwerveModule::ResetModuleOdometry(void)
+{
+    SoftResetDriveEncoder();
+    m_prev_drive_encoder  = 0;
+    m_prev_timestamp = (double)m_timer.GetFPGATimestamp();
+
+    m_curr_x  = 0.0;
+    m_curr_y  = 0.0;
+    m_curr_v  = 0.0;
+
+}
+
+double  SwerveModule::GetModuleOdometryX(void)
+{
+    return m_curr_x;
+}
+
+double  SwerveModule::GetModuleOdometryY(void)
+{
+    return m_curr_y;
+}
+
+double  SwerveModule::GetModuleOdometryVel(void)
+{
+    return m_curr_v;
+}
+
+double  SwerveModule::GetModuleOdometryHeading(void)
+{
+    return m_steerEncoder.GetAbsolutePosition();
+}
+
+
+
+
+
 
 
 /*

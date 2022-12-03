@@ -5,6 +5,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc/Timer.h>
 
 #include "ctre/Phoenix.h"
 
@@ -40,6 +41,16 @@ class SwerveModule : public frc2::SubsystemBase {
   float  GetSteerMotor( void );
   bool   GetDriveInvertion( void );
 
+  //Odometry
+  void    ResetModuleOdometry(void);
+  double  GetModuleOdometryX(void);           //inches
+  double  GetModuleOdometryY(void);           //inches
+  double  GetModuleOdometryVel(void);         //in/sec
+  double  GetModuleOdometryLVel(void);        //in/sec
+  double  GetModuleOdometryRVel(void);        //in/sec
+  double  GetModuleOdometryHeading(void);     //degrees
+
+
 
 
   //Testing only!  
@@ -59,11 +70,22 @@ class SwerveModule : public frc2::SubsystemBase {
   WPI_TalonFX   m_steerMotor;
   WPI_CANCoder  m_steerEncoder;
   std::string   m_dbgID;
-
+  frc::Timer    m_timer;
 
   float m_desired_steer_angle; 
 
   int   m_drive_encoder_zero;
   bool  m_invert_drive;       //invert drive direction
+
+
+
+    //Module Odometry
+    void   ModuleOdometryPeriodic(void);
+    int    m_prev_drive_encoder;
+    double m_prev_timestamp;
+
+    double m_curr_x;  //inches
+    double m_curr_y;  //inches
+    double m_curr_v;  //inches/sec
 
 };
