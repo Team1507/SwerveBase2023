@@ -183,6 +183,18 @@ void Drivetrain::FieldcentricDrive( float fwdrev, float rightleft, float rotate 
     RobotcentricDrive( new_fwdrev, new_rightleft, rotate);
 }
 
+void Drivetrain::Stop(void)
+{
+    std::cout<<"Drivetrain: Stop!"<<std::endl;
+    for(int i=0; i<NUM_SWERVE_MODULES; i++)
+    {
+        m_moduleList[i]->SetDriveMotor(0.0);
+        m_moduleList[i]->SetSteerMotor(0.0);       
+    }
+}
+
+
+
 void Drivetrain::HardResetDriveEncoders(void)
 {
     //** WARNING ***

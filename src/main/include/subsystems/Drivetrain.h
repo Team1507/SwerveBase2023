@@ -25,6 +25,7 @@ class Drivetrain : public frc2::SubsystemBase {
 
   void RobotcentricDrive( float fwdrev, float rightleft, float rotate );
   void FieldcentricDrive( float fwdrev, float rightleft, float rotate );
+  void Stop( void );
 
 
   //Encoders

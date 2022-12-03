@@ -19,6 +19,7 @@ void Robot::RobotInit()
 
   //Init Subsystems
 
+  m_container.m_drivetrain.Stop();
   m_container.m_drivetrain.HardResetDriveEncoders();
   //m_container.m_drivetrain.ResetDriveEncoders();
   m_container.m_drivetrain.ResetSteerEncoders();
