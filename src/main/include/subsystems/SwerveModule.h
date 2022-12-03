@@ -43,14 +43,13 @@ class SwerveModule : public frc2::SubsystemBase {
 
   //Odometry
   void    ResetModuleOdometry(void);
+  void    ModuleOdometryPeriodic(void);
   double  GetModuleOdometryX(void);           //inches
   double  GetModuleOdometryY(void);           //inches
+  double  GetModuleOdometryDeltaX(void);      //inches
+  double  GetModuleOdometryDeltaY(void);      //inches
   double  GetModuleOdometryVel(void);         //in/sec
-  double  GetModuleOdometryLVel(void);        //in/sec
-  double  GetModuleOdometryRVel(void);        //in/sec
   double  GetModuleOdometryHeading(void);     //degrees
-
-
 
 
   //Testing only!  
@@ -80,12 +79,13 @@ class SwerveModule : public frc2::SubsystemBase {
 
 
     //Module Odometry
-    void   ModuleOdometryPeriodic(void);
     int    m_prev_drive_encoder;
     double m_prev_timestamp;
 
-    double m_curr_x;  //inches
-    double m_curr_y;  //inches
-    double m_curr_v;  //inches/sec
+    double m_curr_x;   //inches
+    double m_curr_y;   //inches
+    double m_delta_x;  //inches
+    double m_delta_y;  //inches
+    double m_curr_v;   //inches/sec
 
 };

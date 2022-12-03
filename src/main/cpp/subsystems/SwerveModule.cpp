@@ -84,8 +84,6 @@ void SwerveModule::Periodic()
     frc::SmartDashboard::PutNumber(m_dbgID + "-DrvEnc",  GetDriveEncoder() ); 
 
 
-    ModuleOdometryPeriodic();
-
 //
 //    //Manual control of Steer motor
 //    //float curr_steer_angle = GetSteerEncoderPosition();
@@ -282,8 +280,11 @@ void SwerveModule::ModuleOdometryPeriodic(void)
     //Calculate new X and Y based on Gyro
     double angle = GetModuleOdometryHeading();
 
-    m_curr_x += distance * sin( (angle * M_PI)/180.0 );
-    m_curr_y += distance * cos( (angle * M_PI)/180.0 );
+    m_delta_x = distance * sin( (angle * M_PI)/180.0 );
+    m_delta_y = distance * cos( (angle * M_PI)/180.0 );
+
+    m_curr_x += m_delta_x;
+    m_curr_y += m_delta_y;
 
     //Calculate Velocity
     double delta_time = curr_timestamp - m_prev_timestamp;
@@ -307,6 +308,9 @@ void SwerveModule::ResetModuleOdometry(void)
     m_curr_y  = 0.0;
     m_curr_v  = 0.0;
 
+    m_delta_x = 0.0;
+    m_delta_y = 0.0;
+
 }
 
 double  SwerveModule::GetModuleOdometryX(void)
@@ -317,6 +321,17 @@ double  SwerveModule::GetModuleOdometryX(void)
 double  SwerveModule::GetModuleOdometryY(void)
 {
     return m_curr_y;
+}
+
+
+double  SwerveModule::GetModuleOdometryDeltaX(void)
+{
+    return m_delta_x;
+}
+
+double  SwerveModule::GetModuleOdometryDeltaY(void)
+{
+    return m_delta_y;
 }
 
 double  SwerveModule::GetModuleOdometryVel(void)

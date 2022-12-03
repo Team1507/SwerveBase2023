@@ -14,6 +14,7 @@ void CmdDriveClearAll::Initialize()
 {
   m_container.m_drivetrain.ResetSteerEncoders();
   m_container.m_drivetrain.ZeroGyro();
+  m_container.m_drivetrain.ResetOdometry();
 
   
 }

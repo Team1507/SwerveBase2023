@@ -40,6 +40,15 @@ class Drivetrain : public frc2::SubsystemBase {
   void   ZeroGyro(void); 
   bool   IsGyroBusy(void);            //Busy Calibrating
 
+
+  //Odometry
+  void    ResetOdometry(void);
+  double  GetOdometryX(void);           //inches
+  double  GetOdometryY(void);           //inches
+  double  GetOdometryHeading(void);     //degrees
+
+
+
   //Absolute Encoder calibration
   void   CalibrateSteerEncoderAbsoutePositionStart(void);
   void   CalibrateSteerEncoderAbsoutePositionOffset(void);
@@ -50,6 +59,13 @@ class Drivetrain : public frc2::SubsystemBase {
   driveType m_driveType;  
 
   AHRS m_ahrs{frc::SPI::Port::kMXP};	    //NavX
+
+
+  //Module Odometry
+  void   OdometryPeriodic(void);
+  double m_curr_x;   //inches
+  double m_curr_y;   //inches
+
 
   //Swerve Modules
   //    FL^FR

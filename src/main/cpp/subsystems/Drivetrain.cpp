@@ -78,6 +78,8 @@ Drivetrain::Drivetrain()
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() 
 {
+    OdometryPeriodic();
+
 
 }
 
@@ -240,6 +242,68 @@ bool Drivetrain::IsGyroBusy(void)
     return m_ahrs.IsCalibrating();
 }
 
+
+
+//**************** Odometry *********************
+void Drivetrain::OdometryPeriodic(void)
+{
+
+    float delta_x = 0;
+    float delta_y = 0;
+
+    //Module Odometries MUST be run first
+    for(int i=0; i<NUM_SWERVE_MODULES;i++)
+    {
+        m_moduleList[i]->ModuleOdometryPeriodic();
+    }
+
+    //Get all delta XY values from each module
+    //These values are robotcentric
+    for(int i=0; i<NUM_SWERVE_MODULES;i++)
+    {
+        delta_x = m_moduleList[i]->GetModuleOdometryDeltaX();
+        delta_y = m_moduleList[i]->GetModuleOdometryDeltaY();
+    }
+
+    //Divide by num modules to get average movement
+    delta_x /= NUM_SWERVE_MODULES;
+    delta_y /= NUM_SWERVE_MODULES;
+
+    
+    //Rotate XY to get fieldcentric coordinates
+    float gyro_angle = DEG2RAD( GetGyroYaw()  );        
+
+    m_curr_x +=  ( delta_x * cosf(gyro_angle) ) + ( delta_y * sinf(gyro_angle) );    
+    m_curr_y +=  ( delta_y * cosf(gyro_angle) ) - ( delta_x * sinf(gyro_angle) );    
+
+}
+
+//********************************************
+void Drivetrain::ResetOdometry(void)
+{
+    for(int i=0; i<NUM_SWERVE_MODULES;i++)
+    {
+        m_moduleList[i]->ResetModuleOdometry();
+    }
+    m_curr_x  = 0.0;
+    m_curr_y  = 0.0;
+}
+
+double  Drivetrain::GetOdometryX(void)
+{
+    return m_curr_x;
+}
+
+double  Drivetrain::GetOdometryY(void)
+{
+    return m_curr_y;
+}
+
+
+double  Drivetrain::GetOdometryHeading(void)
+{
+    return 0.0;
+}
 
 
 
