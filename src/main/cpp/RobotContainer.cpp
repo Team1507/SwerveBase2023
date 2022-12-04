@@ -18,6 +18,7 @@
 #include "commands/CmdDriveClearAll.h"
 #include "commands/CmdDriveTypeToggle.h"
 #include "commands/CmdDriveForceSteerAngle.h"
+#include "commands/GrpTest1.h"
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   // Initialize all of your commands and subsystems here
@@ -38,6 +39,10 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 
   frc::SmartDashboard::PutData( "SteerAngle=0",  new CmdDriveForceSteerAngle(0.0));
   frc::SmartDashboard::PutData( "SteerAngle=90", new CmdDriveForceSteerAngle(90.0));
+
+  frc::SmartDashboard::PutData( "GrpTest1", new GrpTest1());
+
+
 
   frc::SmartDashboard::PutData( "CmdCalSwerveEnc_1", new CmdCalibrateSwerveEncoders(1));
   frc::SmartDashboard::PutData( "CmdCalSwerveEnc_2", new CmdCalibrateSwerveEncoders(2));
