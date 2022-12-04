@@ -42,14 +42,14 @@ class SwerveModule : public frc2::SubsystemBase {
   bool   GetDriveInvertion( void );
 
   //Odometry
-  void    ResetModuleOdometry(void);
-  void    ModuleOdometryPeriodic(void);
-  double  GetModuleOdometryX(void);           //inches
-  double  GetModuleOdometryY(void);           //inches
-  double  GetModuleOdometryDeltaX(void);      //inches
-  double  GetModuleOdometryDeltaY(void);      //inches
-  double  GetModuleOdometryVel(void);         //in/sec
-  double  GetModuleOdometryHeading(void);     //degrees
+  void   ResetModuleOdometry(void);
+  void   ModuleOdometryPeriodic(void);
+  float  GetModuleOdometryX(void);           //inches
+  float  GetModuleOdometryY(void);           //inches
+  float  GetModuleOdometryDeltaX(void);      //inches
+  float  GetModuleOdometryDeltaY(void);      //inches
+  float  GetModuleOdometryVel(void);         //in/sec
+  float  GetModuleOdometryHeading(void);     //degrees
 
 
   //Testing only!  
@@ -79,13 +79,13 @@ class SwerveModule : public frc2::SubsystemBase {
 
 
     //Module Odometry
-    int    m_prev_drive_encoder;
-    double m_prev_timestamp;
+    int   m_prev_drive_encoder;
+    float m_prev_timestamp;
 
-    double m_curr_x;   //inches
-    double m_curr_y;   //inches
-    double m_delta_x;  //inches
-    double m_delta_y;  //inches
-    double m_curr_v;   //inches/sec
+    float m_curr_x;   //inches
+    float m_curr_y;   //inches
+    float m_delta_x;  //inches
+    float m_delta_y;  //inches
+    float m_curr_v;   //inches/sec
 
 };

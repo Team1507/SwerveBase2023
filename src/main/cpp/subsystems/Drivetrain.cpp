@@ -193,6 +193,16 @@ void Drivetrain::Stop(void)
     }
 }
 
+void Drivetrain::ForceSteerAngle( float angle )
+{
+    for(int i=0; i<NUM_SWERVE_MODULES; i++)
+    {
+        m_moduleList[i]->SetSteerAngle( angle );       //Old style angle calculation
+    }
+}
+
+
+
 
 
 void Drivetrain::HardResetDriveEncoders(void)
@@ -273,8 +283,8 @@ void Drivetrain::OdometryPeriodic(void)
     //These values are robotcentric
     for(int i=0; i<NUM_SWERVE_MODULES;i++)
     {
-        delta_x = m_moduleList[i]->GetModuleOdometryDeltaX();
-        delta_y = m_moduleList[i]->GetModuleOdometryDeltaY();
+        delta_x += m_moduleList[i]->GetModuleOdometryDeltaX();
+        delta_y += m_moduleList[i]->GetModuleOdometryDeltaY();
     }
 
     //Divide by num modules to get average movement

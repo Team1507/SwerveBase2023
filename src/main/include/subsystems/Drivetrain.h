@@ -27,6 +27,7 @@ class Drivetrain : public frc2::SubsystemBase {
   void FieldcentricDrive( float fwdrev, float rightleft, float rotate );
   void Stop( void );
 
+  void ForceSteerAngle( float angle );
 
   //Encoders
   void HardResetDriveEncoders(void);
