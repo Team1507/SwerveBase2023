@@ -301,20 +301,20 @@ void Drivetrain::ResetOdometry(void)
     m_curr_y  = 0.0;
 }
 
-double  Drivetrain::GetOdometryX(void)
+float  Drivetrain::GetOdometryX(void)
 {
     return m_curr_x;
 }
 
-double  Drivetrain::GetOdometryY(void)
+float  Drivetrain::GetOdometryY(void)
 {
     return m_curr_y;
 }
 
 
-double  Drivetrain::GetOdometryHeading(void)
+float  Drivetrain::GetOdometryHeading(void)
 {
-    return 0.0;
+    return GetGyroYaw();
 }
 
 

@@ -43,10 +43,10 @@ class Drivetrain : public frc2::SubsystemBase {
 
 
   //Odometry
-  void    ResetOdometry(void);
-  double  GetOdometryX(void);           //inches
-  double  GetOdometryY(void);           //inches
-  double  GetOdometryHeading(void);     //degrees
+  void   ResetOdometry(void);
+  float  GetOdometryX(void);           //inches
+  float  GetOdometryY(void);           //inches
+  float  GetOdometryHeading(void);     //degrees
 
 
 
@@ -63,9 +63,9 @@ class Drivetrain : public frc2::SubsystemBase {
 
 
   //Module Odometry
-  void   OdometryPeriodic(void);
-  double m_curr_x;   //inches
-  double m_curr_y;   //inches
+  void  OdometryPeriodic(void);
+  float m_curr_x;   //inches
+  float m_curr_y;   //inches
 
 
   //Swerve Modules
