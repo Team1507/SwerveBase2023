@@ -83,6 +83,12 @@ bool CmdDriveStaight::IsFinished()
     if( distance >= m_distance )
     {
       std::cout<<"CmdDriveStaight: Distance"<<std::endl;
+
+      //DEBUG
+      float curr_x = m_container.m_drivetrain.GetOdometryX();
+      float curr_y = m_container.m_drivetrain.GetOdometryY();
+      std::cout<<"    ("<<curr_x<<","<<curr_y<<") : "<<distance<<std::endl;
+
       return true;
     }
   }

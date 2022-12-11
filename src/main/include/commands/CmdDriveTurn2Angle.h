@@ -31,6 +31,7 @@ class CmdDriveTurn2Angle
 
     float m_power;
     float m_angle;
+    float m_calcAngle;
 
 
 };
