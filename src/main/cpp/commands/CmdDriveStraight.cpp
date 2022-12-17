@@ -11,6 +11,10 @@
 CmdDriveStraight::CmdDriveStraight(float power, float heading, float distance, bool ramp, bool stop, float timeout)
 {
 
+  // ** ROBOT CENTRIC **
+  // Heading is referenced to the front of the robot
+  //   Heading is the direction the robot is moving with respect to the front of the robot
+
   m_power    = power;
   m_heading  = heading * M_PI/180.0;  //Convert to radians
   m_distance = distance;
