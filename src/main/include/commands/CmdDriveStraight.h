@@ -15,10 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdDriveStaight
-    : public frc2::CommandHelper<frc2::CommandBase, CmdDriveStaight> {
+class CmdDriveStraight
+    : public frc2::CommandHelper<frc2::CommandBase, CmdDriveStraight> {
  public:
-  CmdDriveStaight(float power, float heading, float distance, bool ramp, bool stop, float timeout);
+  CmdDriveStraight(float power, float heading, float distance, bool ramp, bool stop, float timeout);
 
   void Initialize() override;
 

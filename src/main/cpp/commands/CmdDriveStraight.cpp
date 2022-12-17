@@ -2,13 +2,13 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "commands/CmdDriveStaight.h"
+#include "commands/CmdDriveStraight.h"
 #include "Robot.h"
 
 #include <iostream>
 #include <math.h>
 
-CmdDriveStaight::CmdDriveStaight(float power, float heading, float distance, bool ramp, bool stop, float timeout)
+CmdDriveStraight::CmdDriveStraight(float power, float heading, float distance, bool ramp, bool stop, float timeout)
 {
 
   m_power    = power;
@@ -26,7 +26,7 @@ CmdDriveStaight::CmdDriveStaight(float power, float heading, float distance, boo
 }
 
 
-void CmdDriveStaight::Initialize() 
+void CmdDriveStraight::Initialize() 
 {
 
   m_initial_x = m_container.m_drivetrain.GetOdometryX();
@@ -41,7 +41,7 @@ void CmdDriveStaight::Initialize()
 }
 
 
-void CmdDriveStaight::Execute() 
+void CmdDriveStraight::Execute() 
 {
 
   float drive_power = m_power;
@@ -54,21 +54,21 @@ void CmdDriveStaight::Execute()
 }
 
 
-void CmdDriveStaight::End(bool interrupted) 
+void CmdDriveStraight::End(bool interrupted) 
 {
   if(m_stop)
     m_container.m_drivetrain.Stop();
 }
 
 
-bool CmdDriveStaight::IsFinished() 
+bool CmdDriveStraight::IsFinished() 
 {
 
   //Check timer
   if ((m_timeout>0.0) && m_timer.HasElapsed( units::second_t(m_timeout) ) )
   {
       m_timer.Stop();
-      std::cout<<"CmdDriveStaight: Timeout"<<std::endl;
+      std::cout<<"CmdDriveStraight: Timeout"<<std::endl;
       return true;
   }
 
@@ -82,7 +82,7 @@ bool CmdDriveStaight::IsFinished()
 
     if( distance >= m_distance )
     {
-      std::cout<<"CmdDriveStaight: Distance"<<std::endl;
+      std::cout<<"CmdDriveStraight: Distance"<<std::endl;
 
       //DEBUG
       float curr_x = m_container.m_drivetrain.GetOdometryX();
