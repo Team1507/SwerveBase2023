@@ -65,9 +65,10 @@ class SwerveModule : public frc2::SubsystemBase {
  
  private:
 
-  WPI_TalonFX   m_driveMotor;
-  WPI_TalonFX   m_steerMotor;
-  WPI_CANCoder  m_steerEncoder;
+  TalonFX   m_driveMotor;
+  TalonFX   m_steerMotor;
+  CANCoder  m_steerEncoder;
+  
   std::string   m_dbgID;
   frc::Timer    m_timer;
 

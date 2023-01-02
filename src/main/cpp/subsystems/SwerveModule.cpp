@@ -21,9 +21,9 @@
 #define DRIVE_ENCODER_TICKS_PER_INCH      (1100)            //Needs to be verified
 
 SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEncoderCanID, std::string debugID )
-            : m_driveMotor(driveMotorCanID),
-              m_steerMotor(steerMotorCanID),
-              m_steerEncoder(steerEncoderCanID),
+            : m_driveMotor(driveMotorCanID,"SwerveDriveDev"),
+              m_steerMotor(steerMotorCanID,"SwerveDriveDev"),
+              m_steerEncoder(steerEncoderCanID,"SwerveDriveDev"),
               m_dbgID(debugID)
 {
 
@@ -247,7 +247,8 @@ void SwerveModule::SoftResetDriveEncoder(void)
 
 float SwerveModule::GetDriveMotor( void )
 {
-    return m_driveMotor.Get();
+    //return m_driveMotor.Get();
+    return 0;
 }
 float SwerveModule::GetSteerMotor( void )
 {
