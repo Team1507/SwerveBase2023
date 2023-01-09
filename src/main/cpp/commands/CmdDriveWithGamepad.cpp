@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/CmdDriveWithGamepad.h"
-
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "Robot.h"
 
 #include <iostream>
@@ -11,6 +11,8 @@
 CmdDriveWithGamepad::CmdDriveWithGamepad() 
 {
   AddRequirements({ &m_container.m_drivetrain });
+  frc::SmartDashboard::PutNumber("Translation Speed Max",0.25);
+  frc::SmartDashboard::PutNumber("Rotational Speed Max",0.25);
 }
 
 
@@ -24,8 +26,8 @@ void CmdDriveWithGamepad::Execute()
 {
 
   //Limiters
-  const float xyScaleValue = 0.25;    //Translational scale (fwd/rev/strafe)
-  const float rScaleValue  = 0.25;    //Rotational scale
+  const float xyScaleValue = frc::SmartDashboard::GetNumber("Translation Speed Max",0.25);    //Translational scale (fwd/rev/strafe)
+  const float rScaleValue  = frc::SmartDashboard::GetNumber("Rotational Speed Max",0.25);    //Rotational scale
   
 
   //Get Gamepad Inputs
