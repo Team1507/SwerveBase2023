@@ -31,7 +31,7 @@
 #define C2M_D   sqrtf(W_DIV_2*W_DIV_2 + H_DIV_2*H_DIV_2 )       //Center-to-module distance 
 
 #define MINIMUM_NEEDED_POWER 0.025        //minimum power needed to move
-
+#define NORMALIZATION_POWER  0.9
 
 
 #define DEG2RAD(deg) ( deg*M_PI/180.0)
@@ -64,7 +64,7 @@ const vector_t moduleRotationUnitVector[] = {
 
 Drivetrain::Drivetrain()
 {
-
+    frc::SmartDashboard::PutNumber("NORMALIZATION_POWER",0.9);
     m_driveType = ROBOTCENTRIC;
 
     //Setup module list
@@ -79,10 +79,16 @@ Drivetrain::Drivetrain()
 void Drivetrain::Periodic() 
 {
     OdometryPeriodic();
-
+    WriteFalconTemps();
 
 }
-
+void Drivetrain::WriteFalconTemps(void)
+{
+    frc::SmartDashboard::PutNumber("FalconTemp FrontLeft", m_frontLeft.GetFalconTemp() );
+    frc::SmartDashboard::PutNumber("FalconTemp RearLeft", m_rearLeft.GetFalconTemp() );
+    frc::SmartDashboard::PutNumber("FalconTemp FrontRight", m_frontRight.GetFalconTemp() );
+    frc::SmartDashboard::PutNumber("FalconTemp RearRight", m_rearRight.GetFalconTemp() );
+}
 
 void Drivetrain::SetDriveType( driveType type )
 {
@@ -138,10 +144,10 @@ void Drivetrain::RobotcentricDrive( float fwdrev, float rightleft, float rotate 
     }
 
     //Check for normalization if maxPower > 1.0
-    if( maxPower > 1.0 )
+    if( maxPower > frc::SmartDashboard::GetNumber("NORMALIZATION_POWER",0.9))
     {
         for(int i=0; i<NUM_SWERVE_MODULES; i++)
-            modulePower[i] = modulePower[i] / maxPower;
+            modulePower[i] = modulePower[i] / (maxPower/frc::SmartDashboard::GetNumber("NORMALIZATION_POWER",0.9));
     }
 
     //Check if max power is high enough to do anything.
@@ -325,6 +331,16 @@ float  Drivetrain::GetOdometryY(void)
 float  Drivetrain::GetOdometryHeading(void)
 {
     return GetGyroYaw();
+}
+
+void Drivetrain::ForcePark(void)
+{
+    int j = 45;
+    for(int i=0; i<NUM_SWERVE_MODULES;i++)
+    {
+        m_moduleList[i]->SetSteerAngle(j);
+        j += 90;
+    }
 }
 
 

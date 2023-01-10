@@ -40,6 +40,7 @@ class SwerveModule : public frc2::SubsystemBase {
   float  GetDriveMotor( void );
   float  GetSteerMotor( void );
   bool   GetDriveInvertion( void );
+  float  GetFalconTemp(void);
 
   //Odometry
   void   ResetModuleOdometry(void);

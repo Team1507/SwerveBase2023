@@ -266,7 +266,10 @@ bool SwerveModule::GetDriveInvertion( void )
 {
     return m_invert_drive;
 }
-
+float  SwerveModule::GetFalconTemp(void)
+{
+    return m_driveMotor.GetTemperature();
+}
 
 
 

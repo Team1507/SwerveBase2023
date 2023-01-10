@@ -16,7 +16,7 @@ class Drivetrain : public frc2::SubsystemBase {
   Drivetrain();
 
   void Periodic() override;
-
+  void WriteFalconTemps(void);
 
   enum driveType { ROBOTCENTRIC, FIELDCENTRIC };
   void SetDriveType( driveType type );
@@ -28,6 +28,8 @@ class Drivetrain : public frc2::SubsystemBase {
   void Stop( void );
 
   void ForceSteerAngle( float angle );
+
+  
 
   //Encoders
   void HardResetDriveEncoders(void);
@@ -49,6 +51,8 @@ class Drivetrain : public frc2::SubsystemBase {
   float  GetOdometryY(void);           //inches
   float  GetOdometryHeading(void);     //degrees
 
+
+  void ForcePark(void);
 
 
   //Absolute Encoder calibration
@@ -78,7 +82,7 @@ class Drivetrain : public frc2::SubsystemBase {
   SwerveModule m_rearRight { REAR_RIGHT_DRIVE_MOTOR_CAN_ID,   REAR_RIGHT_STEER_MOTOR_CAN_ID,   REAR_RIGHT_STEER_ENCODER_CAN_ID,  "RR" };
  
 
-  //Array of pointers to swerve modules, to make processing eeach module more convenient
+  //Array of pointers to swerve modules, to make processing each module more convenient
   SwerveModule* m_moduleList[NUM_SWERVE_MODULES];
 
 
