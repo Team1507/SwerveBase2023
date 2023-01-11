@@ -39,7 +39,7 @@ GrpTest1::GrpTest1() {
   //                    power, gyroHeading,  gyroYaw, distance,   ramp,    stop,    timeout)
   CmdDriveStraightGyro(  0.2,      0.0,        0.0,     42,       false,   false,     5.0  ),
 
-  //                 power  angle) 
+  //                     power    angle) 
   CmdDriveTurn2Angle(    0.25,    -90.0 ),
   CmdDriveStraightGyro(  0.2,     -90.0,      -90.0,     42,       false,   false,     5.0  ),
 

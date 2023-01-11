@@ -270,6 +270,16 @@ bool Drivetrain::IsGyroBusy(void)
     return m_ahrs.IsCalibrating();
 }
 
+float Drivetrain::GetGyroPitch(void)
+{
+    return m_ahrs.GetPitch();
+}
+
+float Drivetrain::GetGyroRoll(void)
+{
+    return m_ahrs.GetRoll();
+}
+
 
 
 //**************** Odometry *********************
