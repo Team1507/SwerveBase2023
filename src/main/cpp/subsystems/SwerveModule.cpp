@@ -33,6 +33,7 @@ SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEn
     m_driveMotor.SetInverted( false );
     m_driveMotor.SetNeutralMode(NeutralMode::Brake);
     m_steerMotor.SetSelectedSensorPosition(0.0,0,10);
+    m_driveMotor.ConfigOpenloopRamp(0.5);
 
     //Initialize steer Motor
     m_steerMotor.ConfigFactoryDefault();
@@ -43,6 +44,9 @@ SwerveModule::SwerveModule(int driveMotorCanID, int steerMotorCanID, int steerEn
 
     m_steerMotor.ConfigVoltageCompSaturation(12.0,10);
     m_steerMotor.EnableVoltageCompensation(true);
+
+
+
 
     //Initialize steer PID
     m_steerMotor.Config_kF(0, STEER_PID_kF, 10);
