@@ -11,6 +11,7 @@
 #include <frc2/command/button/JoystickButton.h>
 
 #include <frc/XboxController.h>
+#include <frc/Joystick.h>
 
 #include "subsystems/Drivetrain.h"
 #include "GamepadMap.h"
@@ -24,6 +25,7 @@ class RobotContainer
 
   //****************Controllers*******************
   frc::XboxController m_xbox {0};
+  frc::Joystick m_joystick {0};
 
 
   //****************Subsystems*******************

@@ -7,6 +7,7 @@
 
 
 #include "commands/CmdDriveWithGamepad.h"
+#include "commands/CmdDriveWithJoystick.h"
 
 #include "commands/CmdButtonA.h"
 #include "commands/CmdButtonB.h"
@@ -26,7 +27,7 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 
 
   //**************************** Subsystem Defaults****************************************
-  m_drivetrain.SetDefaultCommand( CmdDriveWithGamepad() );
+  m_drivetrain.SetDefaultCommand( CmdDriveWithJoystick() );
 
 
   //********************************Smart Dashboard Buttons**************************************
