@@ -78,6 +78,11 @@ void CmdDriveWithJoystick::Execute()
   if (fabs(xL)<= DEADBAND) xL = 0;
   if (fabs(zL)<= DEADBAND) zL = 0;
 
+  //Controller Deadband Subtraction
+  if (fabs(yL)>= DEADBAND) yL += (yL>0)? -DEADBAND : +DEADBAND;
+  if (fabs(zL)>= DEADBAND) zL += (zL>0)? -DEADBAND : +DEADBAND;
+  if (fabs(xL)>= DEADBAND) xL += (xL>0)? -DEADBAND : +DEADBAND;
+
   //m_container.m_drivetrain.Drive( m_container.m_xbox.GetLeftX(),  m_container.m_xbox.GetLeftY(),  m_container.m_xbox.GetRightX()  );
   
 
