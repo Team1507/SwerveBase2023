@@ -64,7 +64,8 @@ void CmdDriveWithJoystick::Execute()
     rScaleValue  = normalRotational;
   }
   
-  const double DEADBAND = 0.05;
+  const double DEADBAND_MAIN = 0.05;
+  const double DEADBAND_TWIST = 0.2;
 
   //Get Gamepad Inputs
   float yL = m_container.m_joystick.GetY();
@@ -74,14 +75,14 @@ void CmdDriveWithJoystick::Execute()
   bool BrakeActivated = m_container.m_joystick.GetRawButton(1);
 
   //Controller Deadband
-  if (fabs(yL)<= DEADBAND) yL = 0;
-  if (fabs(xL)<= DEADBAND) xL = 0;
-  if (fabs(zL)<= DEADBAND) zL = 0;
+  if (fabs(yL)<= DEADBAND_MAIN) yL = 0;
+  if (fabs(xL)<= DEADBAND_MAIN) xL = 0;
+  if (fabs(zL)<= DEADBAND_TWIST) zL = 0;
 
   //Controller Deadband Subtraction
-  if (fabs(yL)>= DEADBAND) yL += (yL>0)? -DEADBAND : +DEADBAND;
-  if (fabs(zL)>= DEADBAND) zL += (zL>0)? -DEADBAND : +DEADBAND;
-  if (fabs(xL)>= DEADBAND) xL += (xL>0)? -DEADBAND : +DEADBAND;
+  if (fabs(yL)>= DEADBAND_MAIN) yL += (yL>0)? -DEADBAND_MAIN : +DEADBAND_MAIN;
+  if (fabs(zL)>= DEADBAND_TWIST) zL += (zL>0)? -DEADBAND_TWIST : +DEADBAND_TWIST;
+  if (fabs(xL)>= DEADBAND_MAIN) xL += (xL>0)? -DEADBAND_MAIN : +DEADBAND_MAIN;
 
   //m_container.m_drivetrain.Drive( m_container.m_xbox.GetLeftX(),  m_container.m_xbox.GetLeftY(),  m_container.m_xbox.GetRightX()  );
   
