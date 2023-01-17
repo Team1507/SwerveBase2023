@@ -21,6 +21,9 @@ class CmdAutoBalance
 
     frc::Timer m_timer;
 
+    float m_speed;
+
+    
 
 
 };
