@@ -74,7 +74,6 @@ void CmdDriveWithGamepad::Execute()
 
 
   //m_container.m_drivetrain.Drive( m_container.m_xbox.GetLeftX(),  m_container.m_xbox.GetLeftY(),  m_container.m_xbox.GetRightX()  );
-  
 
 
   //Scalers
