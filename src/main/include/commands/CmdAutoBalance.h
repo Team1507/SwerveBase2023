@@ -24,8 +24,11 @@ class CmdAutoBalance
     float m_speed;
 
     int m_offDelayCount;
+    int m_speedDelayCount;
 
     bool m_rev;
+
+    bool m_initial;
 
 
 };
