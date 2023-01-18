@@ -65,7 +65,6 @@ void CmdDriveWithGamepad::Execute()
   }
   
   
-
   //Get Gamepad Inputs
   float yL = m_container.m_xbox.GetLeftY();
   float xL = m_container.m_xbox.GetLeftX();
@@ -93,11 +92,11 @@ void CmdDriveWithGamepad::Execute()
 
   if(BrakeActivated)
   {
-      if(BrakePressed)
+    if(BrakePressed)
       {
           m_container.m_drivetrain.ForcePark();
       }
-  }
+    }
 
 }
 

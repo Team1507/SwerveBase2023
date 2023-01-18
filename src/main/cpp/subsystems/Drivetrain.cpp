@@ -5,7 +5,7 @@
 #include <math.h>
 #include <iostream>
 
-#include "subsystems\Drivetrain.h"
+#include "subsystems/Drivetrain.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 
 
@@ -371,3 +371,11 @@ void Drivetrain::CalibrateSteerEncoderAbsoutePositionOffset(void)
         m_moduleList[i]->CalibrateSteerEncoderAbsoutePositionOffset();
 }
 
+bool Drivetrain::IsJoystick(void)
+{
+    return m_joystick;
+}
+void Drivetrain::SetJoystick(bool joystick)
+{
+    m_joystick = joystick;
+}

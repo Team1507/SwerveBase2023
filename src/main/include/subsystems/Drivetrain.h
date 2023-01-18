@@ -60,6 +60,9 @@ class Drivetrain : public frc2::SubsystemBase {
   void   CalibrateSteerEncoderAbsoutePositionStart(void);
   void   CalibrateSteerEncoderAbsoutePositionOffset(void);
 
+  //Flight Sitck Nonsense
+  bool IsJoystick(void);
+  void SetJoystick(bool joystick);
 
  private:
 
@@ -73,6 +76,8 @@ class Drivetrain : public frc2::SubsystemBase {
   float m_curr_x;   //inches
   float m_curr_y;   //inches
 
+  //Flight stick nonsense 2: Electric Boogaloo
+  bool m_joystick;
 
   //Swerve Modules
   //    FL^FR

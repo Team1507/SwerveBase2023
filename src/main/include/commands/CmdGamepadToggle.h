@@ -6,10 +6,6 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-
-#include "subsystems/SwerveModule.h"
-#include "RobotContainer.h"
-#include "commands/CmdGamepadToggle.h"
 #include "subsystems/Drivetrain.h"
 
 /**
@@ -19,10 +15,12 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class CmdDriveWithGamepad
-    : public frc2::CommandHelper<frc2::CommandBase, CmdDriveWithGamepad> {
+class CmdGamepadToggle
+    : public frc2::CommandHelper<frc2::CommandBase, CmdGamepadToggle> {
  public:
-  CmdDriveWithGamepad();
+  CmdGamepadToggle(Drivetrain *drivetrain);
+private:
+  Drivetrain *m_drivetrain;
 
   void Initialize() override;
 
@@ -31,8 +29,4 @@ class CmdDriveWithGamepad
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
-  private:
-
-    
 };
