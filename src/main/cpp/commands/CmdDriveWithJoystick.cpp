@@ -132,15 +132,15 @@ void CmdDriveWithJoystick::Execute()
       rScaleValue  = normalRotational;
     }
   
-    const double DEADBAND_MAIN = 0.05;
+    const double DEADBAND_MAIN = 0.075;
     const double DEADBAND_TWIST = 0.2;
 
     //Get Gamepad Inputs
     float yL = m_container.m_joystick.GetY();
     float xL = m_container.m_joystick.GetX();
     float zL = m_container.m_joystick.GetZ();
-    bool BrakePressed = m_container.m_joystick.GetTriggerPressed();
-    bool BrakeActivated = m_container.m_joystick.GetRawButton(1);
+    bool BrakePressed = m_container.m_joystick.GetRawButtonPressed(1);
+    bool BrakeActivated = m_container.m_joystick.GetRawButton(2);
 
     //Controller Deadband
     if (fabs(yL)<= DEADBAND_MAIN) yL = 0;
@@ -169,12 +169,9 @@ void CmdDriveWithJoystick::Execute()
       m_container.m_drivetrain.FieldcentricDrive( yL,  xL,  zL );
 
 
-    if(BrakeActivated)
+    if(BrakeActivated && BrakePressed)
     {
-      if(BrakePressed)
-      {
-          m_container.m_drivetrain.ForcePark();
-      }
+      m_container.m_drivetrain.ForcePark();
     }
   }
 }
