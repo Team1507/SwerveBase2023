@@ -90,6 +90,8 @@ void Robot::WriteToSmartDashboard(void)
   //Odometry
   frc::SmartDashboard::PutNumber("odo_X",         m_container.m_drivetrain.GetOdometryX()    );
   frc::SmartDashboard::PutNumber("odo_Y",         m_container.m_drivetrain.GetOdometryY()    );
+  //Flight stick nonsense 3: Chipwrecked
+  frc::SmartDashboard::PutBoolean("ControlType",  m_container.m_drivetrain.IsJoystick());
 
 
 }

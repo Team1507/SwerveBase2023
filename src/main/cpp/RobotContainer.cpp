@@ -48,7 +48,7 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   frc::SmartDashboard::PutData( "CmdCalSwerveEnc_1", new CmdCalibrateSwerveEncoders(1));
   frc::SmartDashboard::PutData( "CmdCalSwerveEnc_2", new CmdCalibrateSwerveEncoders(2));
 
-  frc::SmartDashboard::PutData( "CmdGamepadToggle", new CmdGamepadToggle(&m_drivetrain));
+  frc::SmartDashboard::PutData( "Cont. Toggle (Gr = G, R = J)", new CmdGamepadToggle(&m_drivetrain));
 
   // Configure the button bindings
   ConfigureButtonBindings();
