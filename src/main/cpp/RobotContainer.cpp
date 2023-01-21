@@ -20,6 +20,8 @@
 #include "commands/CmdDriveForceSteerAngle.h"
 #include "commands/GrpTest1.h"
 #include "commands/AutoMoveToCone.h"
+#include "commands/AutoChargeStation.h"
+#include "commands/AutoOverAndBack.h"
 #include "commands/CmdAutoBalance.h"
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
@@ -42,10 +44,12 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   frc::SmartDashboard::PutData( "SteerAngle=0",  new CmdDriveForceSteerAngle(0.0));
   frc::SmartDashboard::PutData( "SteerAngle=90", new CmdDriveForceSteerAngle(90.0));
 
-  frc::SmartDashboard::PutData(" CmdAutoBalance", new CmdAutoBalance(.2, 0));
+  frc::SmartDashboard::PutData(" CmdAutoBalance", new CmdAutoBalance());
 
   frc::SmartDashboard::PutData( "GrpTest1", new GrpTest1());
   frc::SmartDashboard::PutData( "AutoDriveToCone", new AutoMoveToCone());
+  frc::SmartDashboard::PutData( "AutoChargeStation", new AutoChargeStation());
+  frc::SmartDashboard::PutData( "AutoOverAndBack", new AutoOverAndBack());
 
 
 

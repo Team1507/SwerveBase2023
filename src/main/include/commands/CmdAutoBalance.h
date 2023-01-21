@@ -7,7 +7,7 @@
 class CmdAutoBalance
     : public frc2::CommandHelper<frc2::CommandBase, CmdAutoBalance> {
  public:
-  CmdAutoBalance(float power, float heading);
+  CmdAutoBalance();
 
   void Initialize() override;
 
