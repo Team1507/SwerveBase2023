@@ -16,10 +16,10 @@ void CmdAutoBalance::Initialize()
   prevTilt = 0;
   m_speed = .2;
   m_timer.Reset();
-  m_offDelayCount = 30;
+  m_offDelayCount = 45;
   m_speedDelayCount = 20;
   m_rev = false;
-  m_initial = false;
+  m_initial = false;    
 }
 
 void CmdAutoBalance::Execute() 
@@ -51,7 +51,7 @@ void CmdAutoBalance::Execute()
 
       if(prevTilt > 0 && currTilt < 0 )
       {
-        m_container.m_drivetrain.RobotcentricDrive(-.3 ,0 ,0.0);
+        m_container.m_drivetrain.RobotcentricDrive(-.25 ,0 ,0.0);
         m_rev = true;
       }
 
