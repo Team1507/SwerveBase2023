@@ -4,7 +4,8 @@
 #include <iostream>
 #define ERROR 2
 
-float prevTilt = 0;
+float prevRoll = 0;
+float prevPitch = 0;
 CmdAutoBalance::CmdAutoBalance() 
 {
   AddRequirements({ &m_container.m_drivetrain });
@@ -13,7 +14,8 @@ CmdAutoBalance::CmdAutoBalance()
 
 void CmdAutoBalance::Initialize() 
 {
-  prevTilt = 0;
+  prevRoll = 0;
+  prevPitch = 0;
   m_speed = .2;
   m_timer.Reset();
   m_offDelayCount = 40;
@@ -25,13 +27,29 @@ void CmdAutoBalance::Initialize()
 void CmdAutoBalance::Execute() 
 {
   
-  float currTilt = m_container.m_drivetrain.GetGyroRoll();
+  float currRoll = m_container.m_drivetrain.GetGyroRoll();
+  float currPitch = m_container.m_drivetrain.GetGyroPitch();
 
   if(m_container.m_drivetrain.GetGyroRoll() > 0 + ERROR && !m_rev)
   {
     m_container.m_drivetrain.RobotcentricDrive( m_speed, 0 ,0.0);   
-    std::cout<<"Running"<<std::endl;
   }
+
+  else if(m_container.m_drivetrain.GetGyroRoll() < 0 - ERROR && !m_rev)
+  {
+    m_container.m_drivetrain.RobotcentricDrive( -m_speed, 0 ,0.0);   
+  }
+
+  else if(m_container.m_drivetrain.GetGyroPitch() > 0 + ERROR && !m_rev)
+  {
+    m_container.m_drivetrain.RobotcentricDrive(0, m_speed, 0.0);
+  }
+
+  else if(m_container.m_drivetrain.GetGyroPitch() < 0 - ERROR && !m_rev)
+  {
+    m_container.m_drivetrain.RobotcentricDrive(0,-m_speed, 0.0);
+  }
+
 
   if(!m_initial)
   {
@@ -49,11 +67,31 @@ void CmdAutoBalance::Execute()
 
   //std::cout<<m_container.m_drivetrain.GetGyroRoll()<<std::endl;
 
-  if(prevTilt > 0 && currTilt < 0 )
+  if(prevRoll > 0 && currRoll < 0 )
   {
     m_container.m_drivetrain.RobotcentricDrive(-.25 ,0 ,0.0);
     m_rev = true;
   }
+
+  else if(prevRoll < 0 && currRoll > 0)
+  {
+    m_container.m_drivetrain.RobotcentricDrive(.25 ,0 ,0.0);
+    m_rev = true;
+  }
+
+  else if(prevPitch > 0 && currPitch < 0)
+  {
+    m_container.m_drivetrain.RobotcentricDrive(0, -.25  ,0.0);
+    m_rev = true;
+  }
+  
+  else if(prevPitch < 0 && currPitch > 0)
+  {
+    m_container.m_drivetrain.RobotcentricDrive(0, .25  ,0.0);
+    m_rev = true;
+  }
+
+
   if(m_rev)
   {
     m_offDelayCount--;
@@ -64,7 +102,7 @@ void CmdAutoBalance::Execute()
     }
   }
     
-  prevTilt = currTilt;
+  prevRoll = currRoll;
 }
 
 void CmdAutoBalance::End(bool interrupted) {}
