@@ -11,7 +11,7 @@ AutoChargeStation::AutoChargeStation()
 {
     AddCommands
     (
-      CmdDriveStraightGyro(.3, 90, 00, 30, false, false, 0),
+      CmdDriveStraightGyro(.3, 90, 90, 30, false, false, 0),
       CmdAutoBalance()
 
     );
